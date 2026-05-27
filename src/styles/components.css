@@ -1,0 +1,15 @@
+.input{
+    border: 1px solid #e2e0e0;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background: transparent;
+}
+.input:focus{
+    outline: 2px solid rgba(41, 85, 239, 0.7);
+    border-color: transparent;
+}
+label{
+    color: #505050;
+}

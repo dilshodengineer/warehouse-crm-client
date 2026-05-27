@@ -1,0 +1,19 @@
+.login-heading{
+    color: #161b1c;
+}
+.login-form{
+    margin-bottom: 250px;
+}
+.login-btn{
+    width: 100%;
+    height: auto;
+    padding: 11px;
+    border: none;
+    color: #ebffff;
+    background: #3553cf;
+    border-radius: 5px;
+}
+.login-btn:hover{
+    background: #2a44ac;
+    transition: 0.1s;
+}
