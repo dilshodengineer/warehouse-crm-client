@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Products() {
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -31,93 +31,125 @@ function Products() {
 
   }, []);
 
+  const formatStock = (stock, unit) => {
+    if (unit === 'pcs') {
+      return Number(stock);
+    }
+
+    return stock;
+  }
+
 
   const getUnitBadge = (unit) => {
     switch (unit) {
       case 'kg':
-        return { status: "bg-success border border-success", content: "kg" };
+        return { status: "bg-success border text-success border-success", content: "kg" };
 
       case 'pcs':
-        return { status: "bg-warning border border-warning", content: "dona" };
+        return { status: "bg-warning border text-warning border-warning", content: "dona" };
 
       case 'l':
-        return { status: "bg-info border border-info", content: "litr" };
+        return { status: "bg-info border text-info border-info", content: "litr" };
 
       default:
-        return { status: "bg-secondary border border-secondary", content: "miqdor" };
+        return { status: "bg-secondary border text-secondary border-secondary", content: "miqdor" };
     }
   };
+
+  if (!products) {
+    return (
+      <div className="d-flex justify-content-center border rounded-3 shadow-sm py-5 bg-white">
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <div>Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
 
   return (
     <div className='row'>
-      <h3>Maxsulotlar</h3>
-      <div className="d-flex justify-content-between mb-3 align-items-end">
-        <div className="d-flex align-items-center gap-2">
-          <span className="small d-inline-block px-2 py-0 border border-success bg-success bg-opacity-25 text-white rounded-2">KG</span>
-          <span className="small d-inline-block px-2 py-0 border border-warning bg-warning bg-opacity-25 text-white rounded-2">Dona</span>
-          <span className="small d-inline-block px-2 py-0 border border-info bg-info bg-opacity-25 text-white rounded-2">Litr</span>
-        </div>
-        <Link to="/products/create" className="btn btn-primary mx-0">
-          <i class="bi bi-plus-circle"></i> Yangi qo'shish
-        </Link>
-      </div>
+      <div className="col-12">
+        <div className="border rounded-3 shadow-sm p-3 bg-white">
 
-      {
-        products
-          ?
-          <>
-            <table className='table align-middle w-100'>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Nomi</th>
-                  <th>Miqdori va turi(dona/vazn/suyuq)</th>
-                  <th>Narxi</th>
-                  <th>Boshqarish</th>
-                </tr>
-              </thead>
-              <tbody>
+          <h3>Maxsulotlar</h3>
+          <div className="d-flex justify-content-between mb-3 align-items-end">
+            <div className="d-flex align-items-center gap-2">
+              <span className="small d-inline-block px-2 py-0 border border-success bg-success text-success bg-opacity-25 rounded-4">kg</span>
+              <span className="small d-inline-block px-2 py-0 border border-warning bg-warning text-warning bg-opacity-25 rounded-4">dona</span>
+              <span className="small d-inline-block px-2 py-0 border border-info bg-info text-info bg-opacity-25 rounded-4">litr</span>
+            </div>
+            <Link to="/products/create" className="btn btn-primary mx-0">
+              <i className="bi bi-plus-circle"></i> Yangi qo'shish
+            </Link>
+          </div>
 
-                {
+          {
+            products
+              ?
+              <>
+                <table className='table table-bordered align-middle'>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nomi</th>
+                      <th>Miqdori va turi(dona/vazn/suyuq)</th>
+                      <th>Narxi</th>
+                      <th>Boshqarish</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                  products.map((item, index) => {
+                    {
 
-                    const unitBadge = getUnitBadge(item.unit);
+                      products.map((item, index) => {
 
-                    return (
-                      <tr key={item.id || index}>
-                        <td>{index + 1}</td>
-                        <td>{item.name}</td>
-                        <td>
-                          <div className="d-flex">
-                            {item.stock}
-                            <small className={` mx-2
+                        const unitBadge = getUnitBadge(item.unit);
+
+                        return (
+                          <tr key={item.id || index}>
+                            <td>{index + 1}</td>
+                            <td>{item.name}</td>
+                            <td>
+                              <div className="d-flex">
+                                {formatStock(item.stock, item.unit)}
+                                <small className={` mx-2
                             small d-inline-block 
                             px-2 py-0 bg-opacity-25 
-                            text-white rounded-2 
+                            rounded-4
                             ${unitBadge.status}
                             `}>
-                              {unitBadge.content}
-                            </small>
-                          </div>
-                        </td>
-                        <td>{item.price} so'm</td>
-                        <td>
-                          <button className="btn btn-success btn-sm">
-                            <i className="bi bi-pencil"></i> Tahrirlash
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                }
+                                  {unitBadge.content}
+                                </small>
+                              </div>
+                            </td>
+                            <td>{item.price} so'm</td>
+                            <td>
+                              <div className="d-flex align-items-center gap-2">
+                                <Link to={`/products/${item.id}`} className="btn btn-info text-light btn-sm">
+                                  Batafsil  <i className="bi bi-box-arrow-up-right"></i>
+                                </Link>
+                                <Link to={`/products/${item.id}/edit`} className="btn btn-success btn-sm">
+                                  <i className="bi bi-pencil"></i> Tahrirlash
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    }
 
-              </tbody>
-            </table>
-          </>
-          : ""
-      }
+                  </tbody>
+                </table>
+              </>
+              : ""
+          }
+
+        </div>
+      </div>
     </div>
   );
 };

@@ -36,6 +36,8 @@ import TestPage from "../pages/Dashboard/TestPage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import AddProduct from "../pages/Warehouse/AddProduct";
+import ShowProduct from "../pages/Warehouse/ShowProduct";
+import EditProduct from "../pages/Warehouse/EditProduct";
 
 function AppRouter() {
   return (
@@ -62,9 +64,11 @@ function AppRouter() {
 
           {/* WAREHOUSE */}
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ShowProduct/>}/>
           <Route path="/stock-batches" element={<StockBatches />} />
           <Route path="/stock-balance" element={<StockBalance />} />
           <Route path="/products/create" element={<AddProduct/>}/>
+          <Route path="/products/:id/edit" element={<EditProduct/>}/>
 
           {/* FINANCE */}
           <Route path="/expenses" element={<Expenses />} />

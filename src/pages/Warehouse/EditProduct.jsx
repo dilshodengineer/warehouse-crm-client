@@ -1,16 +1,54 @@
+import React, { useEffect, useState } from 'react';
+import Input from '../../components/ui/Input';
+import { useParams, useNavigate, replace } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState } from 'react';
-import Input from "../../components/ui/Input";
 
-const AddProduct = () => {
+const EditProduct = () => {
 
-    const [errors, setErrors] = useState({});
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [stock, setStock] = useState('');
-    const [unit, setUnit] = useState('kg');
+    const [errors, setErrors] = useState(null);
+
+    const [product, setProduct] = useState();
+    const [name, setName] = useState();
+    const [price, setPrice] = useState();
+    const [unit, setUnit] = useState();
+    const [stock, setStock] = useState();
     const [description, setDescription] = useState('');
+
+
+    useEffect(() => {
+
+        const fetchProduct = async () => {
+
+            const token = localStorage.getItem('token');
+
+            const response = await axios.get(
+                `http://127.0.0.1:8000/api/products/${id}`,
+
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            const data = response.data.product;
+
+
+            setProduct(data);
+
+            setName(data.name);
+            setPrice(data.price);
+            setUnit(data.unit);
+            setStock(data.stock);
+            setDescription(data.description);
+        }
+
+        fetchProduct()
+
+    }, [id])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,32 +63,43 @@ const AddProduct = () => {
                 stock,
                 unit,
                 description
-            };
+            }
 
-            const response = await axios.post(
-                'http://127.0.0.1:8000/api/products',
+            const response = await axios.put(
+                `http://127.0.0.1:8000/api/products/${id}`,
                 data,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 }
-            );
+            )
 
-            console.log(response.data);
+            navigate('/products', {replace: true})
 
         } catch (err) {
-
-            if (err.response?.status === 422){
-                setErrors(err.response.data.errors);
+            if (err.response?.status === 422) {
+                setErrors(err.response.data.errors)
             }
-
-            console.log(err.response?.data || err.message);
         }
+
+    }
+
+    if (!product) {
+        return (
+            <div className="d-flex justify-content-center border rounded-3 shadow-sm py-5 bg-white">
+                <div className="text-center">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <div>Loading...</div>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div className='container-fluid bg-white rounded-3 border shadow-sm p-3 pb-5'>
+        <div className='container-fluid bg-white rounded-3 border shadow-sm p-4 pb-5'>
 
             <h3>Mahsulot qo'shish</h3>
 
@@ -63,16 +112,11 @@ const AddProduct = () => {
                     <Input
                         label="Nomi"
                         placeholder="Nomi"
-                        className={`mt-1 mb-3 ${errors.name && 'border-danger'}`}
+                        className={`mt-1 mb-3`}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
 
-                    {errors.name && (
-                        <div className="text-danger mb-4">
-                            {errors.name[0]}
-                        </div>
-                    )}
                 </div>
 
                 <div className="col-sm-6">
@@ -80,16 +124,10 @@ const AddProduct = () => {
                         label="Narxi"
                         type="number"
                         placeholder="Narxi"
-                        className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
+                        className={`mt-1 mb-3`}
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
-
-                    {errors.price && (
-                        <div className="text-danger mb-4">
-                            {errors.price[0]}
-                        </div>
-                    )}
                 </div>
 
                 <div className="col-sm-6">
@@ -97,16 +135,10 @@ const AddProduct = () => {
                         label="Miqdori"
                         type="number"
                         placeholder="Miqdori"
-                        className={`mt-1 mb-3 ${errors.stock && 'border-danger'}`}
+                        className={`mt-1 mb-3`}
                         value={stock}
                         onChange={(e) => setStock(e.target.value)}
                     />
-
-                    {errors.stock && (
-                        <div className="text-danger mb-4">
-                            {errors.stock[0]}
-                        </div>
-                    )}
                 </div>
 
                 <div className="col-sm-6">
@@ -182,7 +214,7 @@ const AddProduct = () => {
                         className="btn btn-dark px-5"
                         type="submit"
                     >
-                        Qo'shish
+                        Yangilash
                     </button>
                 </div>
 
@@ -190,6 +222,6 @@ const AddProduct = () => {
 
         </div>
     )
-}
+};
 
-export default AddProduct;
+export default EditProduct;

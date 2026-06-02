@@ -31,16 +31,16 @@ export const sidebarData = [
           path: "/products",
           icon: "bi bi-box",
         },
-        {
-          title: "Ombor partiyalari",
-          path: "/stock-batches",
-          icon: "bi bi-archive",
-        },
-        {
-          title: "Qoldiq (balans)",
-          path: "/stock-balance",
-          icon: "bi bi-bar-chart",
-        },
+        // {
+        //   title: "Ombor partiyalari",
+        //   path: "/stock-batches",
+        //   icon: "bi bi-archive",
+        // },
+        // {
+        //   title: "Qoldiq (balans)",
+        //   path: "/stock-balance",
+        //   icon: "bi bi-bar-chart",
+        // },
 
         {
           title: "Mahsulot qo'shish",
