@@ -5,10 +5,13 @@ import axios from 'axios';
 
 const EditProduct = () => {
 
+
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [errors, setErrors] = useState(null);
+    const [errors, setErrors] = useState({});
+    `
+    .9+9`
 
     const [product, setProduct] = useState();
     const [name, setName] = useState();
@@ -34,7 +37,7 @@ const EditProduct = () => {
                 }
             )
 
-            const data = response.data.product;
+            const data = response.data.data;
 
 
             setProduct(data);
@@ -112,10 +115,16 @@ const EditProduct = () => {
                     <Input
                         label="Nomi"
                         placeholder="Nomi"
-                        className={`mt-1 mb-3`}
+                        className={`mt-1 mb-3 ${errors.name && 'border-danger'}`}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
+
+                    {errors.name && (
+                        <div className="text-danger mb-4">
+                            {errors.name[0]}
+                        </div>
+                    )}
 
                 </div>
 
@@ -124,10 +133,17 @@ const EditProduct = () => {
                         label="Narxi"
                         type="number"
                         placeholder="Narxi"
-                        className={`mt-1 mb-3`}
+                        className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
+
+                    {errors.price && (
+                        <div className="text-danger mb-4">
+                            {errors.price[0]}
+                        </div>
+                    )}
+
                 </div>
 
                 <div className="col-sm-6">
@@ -135,10 +151,17 @@ const EditProduct = () => {
                         label="Miqdori"
                         type="number"
                         placeholder="Miqdori"
-                        className={`mt-1 mb-3`}
+                        className={`mt-1 mb-3 ${errors.stock && 'border-danger'}`}
                         value={stock}
                         onChange={(e) => setStock(e.target.value)}
                     />
+
+                    {errors.stock && (
+                        <div className="text-danger mb-4">
+                            {errors.stock[0]}
+                        </div>
+                    )}
+
                 </div>
 
                 <div className="col-sm-6">

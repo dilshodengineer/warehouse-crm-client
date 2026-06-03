@@ -129,12 +129,19 @@ function Products() {
                             <td>{item.price} so'm</td>
                             <td>
                               <div className="d-flex align-items-center gap-2">
+
                                 <Link to={`/products/${item.id}`} className="btn btn-info text-light btn-sm">
                                   Batafsil  <i className="bi bi-box-arrow-up-right"></i>
                                 </Link>
-                                <Link to={`/products/${item.id}/edit`} className="btn btn-success btn-sm">
-                                  <i className="bi bi-pencil"></i> Tahrirlash
+
+                                <Link to={`/products/${item.id}/edit`} className="btn btn-secondary btn-sm">
+                                  Tahrirlash <i className="bi bi-pencil"></i>
                                 </Link>
+
+                                <button className="btn btn-dark btn-sm">
+                                  Tashlash <i class="bi bi-trash3"></i>
+                                </button>
+
                               </div>
                             </td>
                           </tr>

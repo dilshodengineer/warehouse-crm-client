@@ -24,7 +24,7 @@ const ShowProduct = () => {
                 }
             );
 
-            setProduct(response.data.product);
+            setProduct(response.data.data);
 
 
         }
