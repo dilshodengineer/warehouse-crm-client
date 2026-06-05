@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Input from '../../components/ui/Input';
-import { useParams, useNavigate, replace } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import Loader from '../../components/ui/Loader';
+import LoadingBtn from '../../components/ui/LoadingBtn';
+import { getProduct, updateProduct } from '../../services/ProductService';
+import Message from '../../components/ui/Message';
 
 const EditProduct = () => {
 
@@ -10,14 +13,15 @@ const EditProduct = () => {
     const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
-    `
-    .9+9`
+    const [pageError, setPageError] = useState(null);
+    const [pageLoading, setPageLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [product, setProduct] = useState();
-    const [name, setName] = useState();
-    const [price, setPrice] = useState();
-    const [unit, setUnit] = useState();
-    const [stock, setStock] = useState();
+    const [product, setProduct] = useState(null);
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [unit, setUnit] = useState('kg');
+    const [stock, setStock] = useState('');
     const [description, setDescription] = useState('');
 
 
@@ -25,28 +29,25 @@ const EditProduct = () => {
 
         const fetchProduct = async () => {
 
-            const token = localStorage.getItem('token');
+            try {
 
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/products/${id}`,
+                setPageLoading(true);
 
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
+                const data = await getProduct(id);
 
-            const data = response.data.data;
+                setProduct(data);
 
+                setName(data.name);
+                setPrice(data.price);
+                setUnit(data.unit);
+                setStock(data.stock);
+                setDescription(data.description);
+            } catch (err) {
+                setPageError(err.response.data.message || "Hatolik yus berdi");
 
-            setProduct(data);
-
-            setName(data.name);
-            setPrice(data.price);
-            setUnit(data.unit);
-            setStock(data.stock);
-            setDescription(data.description);
+            } finally {
+                setPageLoading(false)
+            }
         }
 
         fetchProduct()
@@ -58,193 +59,181 @@ const EditProduct = () => {
 
         try {
 
-            const token = localStorage.getItem('token');
+            setIsLoading(true)
 
             const data = {
                 name,
                 price,
-                stock,
+                stock,  
                 unit,
                 description
             }
 
-            const response = await axios.put(
-                `http://127.0.0.1:8000/api/products/${id}`,
-                data,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
+            await updateProduct(id, data);
 
-            navigate('/products', {replace: true})
+            navigate('/products', { replace: true })
 
         } catch (err) {
             if (err.response?.status === 422) {
                 setErrors(err.response.data.errors)
             }
+        } finally {
+            setIsLoading(false);
         }
 
-    }
-
-    if (!product) {
-        return (
-            <div className="d-flex justify-content-center border rounded-3 shadow-sm py-5 bg-white">
-                <div className="text-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                    <div>Loading...</div>
-                </div>
-            </div>
-        );
     }
 
     return (
         <div className='container-fluid bg-white rounded-3 border shadow-sm p-4 pb-5'>
 
-            <h3>Mahsulot qo'shish</h3>
+            {
+                pageLoading ? (
+                    <Loader />
+                ) : pageError ? (
+                    <Message message={pageError} type="danger" />
+                ) : !product ? (
+                    <Message message="Mahsulot topilmadi" />
+                ) : (
+                    <>
+                        <h3>Mahsulotni yangilash</h3>
 
-            <form
-                onSubmit={handleSubmit}
-                className="row"
-            >
+                        <form
+                            onSubmit={handleSubmit}
+                            className="row"
+                        >
 
-                <div className="col-sm-6">
-                    <Input
-                        label="Nomi"
-                        placeholder="Nomi"
-                        className={`mt-1 mb-3 ${errors.name && 'border-danger'}`}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+                            <div className="col-sm-6">
+                                <Input
+                                    label="Nomi"
+                                    placeholder="Nomi"
+                                    className={`mt-1 mb-3 ${errors.name && 'border-danger'}`}
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
 
-                    {errors.name && (
-                        <div className="text-danger mb-4">
-                            {errors.name[0]}
-                        </div>
-                    )}
+                                {errors.name && (
+                                    <div className="text-danger mb-4">
+                                        {errors.name[0]}
+                                    </div>
+                                )}
 
-                </div>
+                            </div>
 
-                <div className="col-sm-6">
-                    <Input
-                        label="Narxi"
-                        type="number"
-                        placeholder="Narxi"
-                        className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
+                            <div className="col-sm-6">
+                                <Input
+                                    label="Narxi"
+                                    type="number"
+                                    placeholder="Narxi"
+                                    className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                />
 
-                    {errors.price && (
-                        <div className="text-danger mb-4">
-                            {errors.price[0]}
-                        </div>
-                    )}
+                                {errors.price && (
+                                    <div className="text-danger mb-4">
+                                        {errors.price[0]}
+                                    </div>
+                                )}
 
-                </div>
+                            </div>
 
-                <div className="col-sm-6">
-                    <Input
-                        label="Miqdori"
-                        type="number"
-                        placeholder="Miqdori"
-                        className={`mt-1 mb-3 ${errors.stock && 'border-danger'}`}
-                        value={stock}
-                        onChange={(e) => setStock(e.target.value)}
-                    />
+                            <div className="col-sm-6">
+                                <Input
+                                    label="Miqdori"
+                                    type="number"
+                                    placeholder="Miqdori"
+                                    className={`mt-1 mb-3 ${errors.stock && 'border-danger'}`}
+                                    value={stock}
+                                    onChange={(e) => setStock(e.target.value)}
+                                />
 
-                    {errors.stock && (
-                        <div className="text-danger mb-4">
-                            {errors.stock[0]}
-                        </div>
-                    )}
+                                {errors.stock && (
+                                    <div className="text-danger mb-4">
+                                        {errors.stock[0]}
+                                    </div>
+                                )}
 
-                </div>
+                            </div>
 
-                <div className="col-sm-6">
+                            <div className="col-sm-6">
 
-                    <label className="form-label">
-                        O'lchov turi
-                    </label>
+                                <label className="form-label">
+                                    O'lchov turi
+                                </label>
 
-                    <div className="d-flex gap-3 mt-2">
+                                <div className="d-flex gap-3 mt-2">
 
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="unit"
-                                value="kg"
-                                checked={unit === 'kg'}
-                                onChange={(e) => setUnit(e.target.value)}
-                            />
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="unit"
+                                            value="kg"
+                                            checked={unit === 'kg'}
+                                            onChange={(e) => setUnit(e.target.value)}
+                                        />
 
-                            <label className="form-check-label">
-                                KG
-                            </label>
-                        </div>
+                                        <label className="form-check-label">
+                                            KG
+                                        </label>
+                                    </div>
 
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="unit"
-                                value="l"
-                                checked={unit === 'l'}
-                                onChange={(e) => setUnit(e.target.value)}
-                            />
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="unit"
+                                            value="l"
+                                            checked={unit === 'l'}
+                                            onChange={(e) => setUnit(e.target.value)}
+                                        />
 
-                            <label className="form-check-label">
-                                Litr
-                            </label>
-                        </div>
+                                        <label className="form-check-label">
+                                            Litr
+                                        </label>
+                                    </div>
 
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="unit"
-                                value="pcs"
-                                checked={unit === 'pcs'}
-                                onChange={(e) => setUnit(e.target.value)}
-                            />
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="unit"
+                                            value="pcs"
+                                            checked={unit === 'pcs'}
+                                            onChange={(e) => setUnit(e.target.value)}
+                                        />
 
-                            <label className="form-check-label">
-                                Dona
-                            </label>
-                        </div>
+                                        <label className="form-check-label">
+                                            Dona
+                                        </label>
+                                    </div>
 
-                    </div>
+                                </div>
 
-                </div>
+                            </div>
 
-                <div className="col-12">
-                    <Input
-                        label="Izoh (Ixtiyoriy)"
-                        type="text"
-                        placeholder="Izoh"
-                        className='mt-1 mb-3'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </div>
+                            <div className="col-12">
+                                <Input
+                                    label="Izoh (Ixtiyoriy)"
+                                    type="text"
+                                    placeholder="Izoh"
+                                    className='mt-1 mb-3'
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
+                            </div>
 
-                <div className="text-end">
-                    <button
-                        className="btn btn-dark px-5"
-                        type="submit"
-                    >
-                        Yangilash
-                    </button>
-                </div>
+                            <div className="text-end">
+                                <LoadingBtn isLoading={isLoading} content="Yangilash" />
+                            </div>
 
-            </form>
+                        </form>
+                    </>
+                )
+            }
 
         </div>
-    )
+    );
 };
 
 export default EditProduct;

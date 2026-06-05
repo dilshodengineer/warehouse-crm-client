@@ -1,48 +1,41 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Loader from '../../components/ui/Loader';
+import { getProduct } from '../../services/ProductService';
+import Message from '../../components/ui/Message';
 
 const ShowProduct = () => {
 
     const { id } = useParams();
 
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState(null);   
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
         const fetchProduct = async () => {
+            try {
+                setLoading(true);
 
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/products/${id}`,
-
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-
-            setProduct(response.data.data);
-
+                const data = await getProduct(id);
+                setProduct(data)
+            } catch (err) {
+                return null;
+            } finally {
+                setLoading(false);
+            }
 
         }
 
         fetchProduct();
     }, [id])
 
-    if (!product) {
-        return (
-            <div className="d-flex justify-content-center border rounded-3 shadow-sm py-5 bg-white">
-                <div className="text-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                    <div>Loading...</div>
-                </div>
-            </div>
-        );
+    if (loading){
+        return <Loader/>;
+    }
+
+    if (!product && !loading) {
+        return <Message message="Mahsulot mavjud emas"/>
     }
 
     return (

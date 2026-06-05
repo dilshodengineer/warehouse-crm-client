@@ -1,10 +1,15 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import Input from "../../components/ui/Input";
+import { useNavigate } from 'react-router-dom';
+import { createProduct } from '../../services/ProductService';
+import LoadingBtn from '../../components/ui/LoadingBtn';
 
 const AddProduct = () => {
 
+    const navigate = useNavigate();
+
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -17,7 +22,7 @@ const AddProduct = () => {
 
         try {
 
-            const token = localStorage.getItem('token');
+            setIsLoading(true)
 
             const data = {
                 name,
@@ -27,26 +32,22 @@ const AddProduct = () => {
                 description
             };
 
-            const response = await axios.post(
-                'http://127.0.0.1:8000/api/products',
-                data,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
+            await createProduct(data);
 
-            console.log(response.data);
+
+            navigate('/products', { replace: true });
 
         } catch (err) {
 
-            if (err.response?.status === 422){
-                setErrors(err.response.data.errors);
+            if (err.response?.status === 422) {
+                setErrors(err.response.data.errors || "Xatolik yuz berdi.");
             }
 
             console.log(err.response?.data || err.message);
+        } finally {
+            setIsLoading(false);
         }
+
     }
 
     return (
@@ -178,12 +179,7 @@ const AddProduct = () => {
                 </div>
 
                 <div className="text-end">
-                    <button
-                        className="btn btn-dark px-5"
-                        type="submit"
-                    >
-                        Qo'shish
-                    </button>
+                    <LoadingBtn isLoading={isLoading} content="Qo'shish"/>
                 </div>
 
             </form>
