@@ -1,0 +1,73 @@
+h4{
+    text-align: center;
+}
+h6{
+    font-size: 14px;
+    text-align: center;
+}
+.receipt-date{
+    text-align: right;
+}
+.first-line{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+.receipt-page {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.receipt-center{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#receipt {
+    width: 80mm;
+    font-size: 12px;
+    background: #ffffff;
+    display: block;
+    padding: 0 20px 0 20px;
+}
+
+
+.receipt-row {
+
+    display:flex;
+    justify-content:space-between;
+
+}
+
+.dashed-border{
+    border-top: 1px dashed #000;
+    margin: 2px 0 5px 0;
+}
+
+.total-amount{
+    display: block;
+    padding-bottom: 25mm;
+}
+
+@media print {
+
+    .print-btn {
+        display:none;
+    }
+
+    body {
+        width: 8cm;
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    #receipt {
+        width:70mm;
+        margin:0;
+        padding: 0;
+    }
+
+
+}

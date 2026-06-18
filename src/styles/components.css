@@ -13,3 +13,16 @@
 label{
     color: #505050;
 }
+.quantity-input{
+    display: inline-block;
+    width: 60px;
+    font-size: 14px;
+    height: 30px;
+    padding: 0 3px;
+    border: 1px solid #dbdada;
+    border-radius: 5px;
+}
+.quantity-input:focus{
+    border-color: transparent;
+    outline: 2px solid #ffc107;
+}

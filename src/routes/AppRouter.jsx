@@ -13,6 +13,7 @@ import Login from "../pages/Auth/Login";
 /* SALES */
 import NewSale from "../pages/Sales/NewSale";
 import SalesHistory from "../pages/Sales/SalesHistory";
+import Receipt from "../pages/Sales/Receipt";
 
 /* WAREHOUSE */
 import Products from "../pages/Warehouse/Products";
@@ -87,6 +88,9 @@ function AppRouter() {
           <Route path="/reports/inventory" element={<InventoryReport />} />
 
         </Route>
+
+        <Route path="/receipt" element={<Receipt/>}/>
+
       </Route>
 
     </Routes>

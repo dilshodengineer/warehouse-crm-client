@@ -1,3 +1,3 @@
 export const formatPrice = (price) => {
-    return Number(price);
+    return price.toLocaleString('fr-FR');
 }

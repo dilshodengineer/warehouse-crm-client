@@ -1,13 +1,13 @@
 import api from "./api";
 
 export const getProducts = async () => {
-    const { data } = await api.get('/products');
-    return data?.data?.data; // returns array
+  const {data} = await api.get('/products');
+  return data?.data?.data; // returns array
 };
 
 export const getProduct = async (id) => {
-    const { data } = await api.get(`/products/${id}`);
-    return data?.data; // returns object
+  const {data} = await api.get(`/products/${id}`);
+  return data?.data; // returns object
 };
 
 export const createProduct = (data) => api.post('/products', data);
