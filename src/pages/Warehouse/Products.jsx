@@ -6,7 +6,7 @@ import Message from '../../components/ui/Message';
 import {deleteProduct, getProducts} from '../../services/ProductService';
 import StockUnitBadges from '../../components/ui/StockUnitBadges';
 import ProductsTable from '../../components/layout/warehouse/ProductsTable';
-import {getPageNumbers} from "../../utils/pagination";
+import Pagination from "../../components/ui/Pagination";
 
 
 function Products() {
@@ -105,53 +105,7 @@ function Products() {
             <>
               <ProductsTable data={products} handleClick={handleClick}/>
 
-              <div className="d-flex justify-content-center gap-2 mt-3">
-                <div className="btn-group gap-1">
-                  <button
-                    className="btn btn-dark"
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage(prev => prev - 1)}
-                  >
-                    <i className="bi bi-arrow-left"></i> Ortga
-                  </button>
-                  {
-                    getPageNumbers(currentPage, lastPage).map((page, index) =>
-                    page === "..." ?  (
-                      <button
-                        key={index}
-                        className="btn btn-outline-secondary"
-                        disabled
-                      >
-                        ...
-                      </button>
-                    ) : (
-                      <button
-                        key={page}
-                        className={`btn ${
-                          currentPage === page
-                            ? "btn-dark"
-                            : "btn-outline-dark"
-                        }`}
-                        onClick={() => setCurrentPage(page)}
-                      >
-                        {page}
-                      </button>
-                    )
-                    )
-                  }
-                  <button
-                    className="btn btn-dark"
-                    disabled={currentPage === lastPage}
-                    onClick={() => setCurrentPage(prev => prev + 1)}
-                  >
-                    Keyingi <i className="bi bi-arrow-right"></i>
-                  </button>
-                </div>
-
-                <span className="align-self-center">
-                  {currentPage} / {lastPage}
-                </span>
-              </div>
+              <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={setCurrentPage}/>
             </>
           )
         }

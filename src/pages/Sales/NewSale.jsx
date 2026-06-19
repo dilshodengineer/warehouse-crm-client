@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {getProducts} from '../../services/ProductService'
 import StockUnitBadges from '../../components/ui/StockUnitBadges';
 import Loader from '../../components/ui/Loader';
@@ -10,6 +10,7 @@ import {useCartStore} from '../../stores/cartStore';
 import {createSale} from '../../services/SaleService';
 import SaleTable from '../../components/layout/sales/SaleTable';
 import {formatPrice} from "../../utils/formatPrice";
+import Pagination from "../../components/ui/Pagination";
 
 function NewSale() {
 
@@ -19,6 +20,8 @@ function NewSale() {
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [disable, setDisable] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
 
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
@@ -38,9 +41,10 @@ function NewSale() {
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
-        const response = await getProducts();
+        const response = await getProducts(currentPage);
 
         setData(response.data);
+        setLastPage(response.last_page);
       } catch (err) {
         setErrors(err.response?.message)
       } finally {
@@ -121,7 +125,10 @@ function NewSale() {
             ) : data.length === 0 ? (
               <Message message="Xozircha mahsulotlar yo'q"/>
             ) : (
-              <SaleTable data={data}/>
+              <>
+                <SaleTable data={data}/>
+                <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={setCurrentPage}/>
+              </>
             )
           }
         </div>
