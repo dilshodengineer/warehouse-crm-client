@@ -53,7 +53,7 @@ function NewSale() {
     }
 
     fetchProducts()
-  }, []);
+  }, [currentPage]);
 
   const handleSell = async (e) => {
     e.preventDefault();
