@@ -15,7 +15,7 @@ function NewSale() {
 
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]);
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [disable, setDisable] = useState(false);
@@ -38,9 +38,9 @@ function NewSale() {
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
-        const data = await getProducts();
+        const response = await getProducts();
 
-        setProducts(data);
+        setData(response.data);
       } catch (err) {
         setErrors(err.response?.message)
       } finally {
@@ -118,10 +118,10 @@ function NewSale() {
               <Loader/>
             ) : errors ? (
               <Message message={errors} type="danger"/>
-            ) : products.length === 0 ? (
+            ) : data.length === 0 ? (
               <Message message="Xozircha mahsulotlar yo'q"/>
             ) : (
-              <SaleTable data={products}/>
+              <SaleTable data={data}/>
             )
           }
         </div>

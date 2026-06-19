@@ -80,7 +80,6 @@ function Products() {
 
   return (
     <>
-
       <ConfirmModal
         isOpen={isOpen}
         onClose={closeModal}
