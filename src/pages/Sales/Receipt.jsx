@@ -11,8 +11,8 @@ function Receipt(){
 
   if (!sale) {
     return (
-      <div>
-        Chek topilmadi
+      <div className="text-danger text-center">
+        <span>Chek topilmadi.</span>
       </div>
     );
   }
