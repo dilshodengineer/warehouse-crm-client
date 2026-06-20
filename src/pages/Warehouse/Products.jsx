@@ -36,6 +36,7 @@ function Products() {
       } catch (err) {
 
         setErrors(err.response?.data?.message || "Xatolik yuz berdi");
+        console.log(err.response);
 
       } finally {
         setIsLoading(false);

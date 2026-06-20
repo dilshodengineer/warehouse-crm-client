@@ -1,0 +1,58 @@
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 4px 8px;
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+
+    border: 1px solid transparent;
+
+    user-select: none;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* PAID */
+
+.status-paid {
+    color: #166534;
+    background: #dcfce7;
+    border-color: #bbf7d0;
+}
+
+.status-paid .status-dot {
+    background: #22c55e;
+}
+
+/* PARTIAL */
+
+.status-partial {
+    color: #92400e;
+    background: #fef3c7;
+    border-color: #fde68a;
+}
+
+.status-partial .status-dot {
+    background: #f59e0b;
+}
+
+/* UNPAID */
+
+.status-unpaid {
+    color: #991b1b;
+    background: #fee2e2;
+    border-color: #fecaca;
+}
+
+.status-unpaid .status-dot {
+    background: #ef4444;
+}

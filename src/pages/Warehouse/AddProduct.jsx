@@ -55,6 +55,8 @@ const AddProduct = () => {
 
             <h3>Mahsulot qo'shish</h3>
 
+            <div className="border-bottom my-2"></div>
+
             <form
                 onSubmit={handleSubmit}
                 className="row"

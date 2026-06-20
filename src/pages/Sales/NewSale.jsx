@@ -11,6 +11,7 @@ import {createSale} from '../../services/SaleService';
 import SaleTable from '../../components/layout/sales/SaleTable';
 import {formatPrice} from "../../utils/formatPrice";
 import Pagination from "../../components/ui/Pagination";
+import SearchBar from "../../components/ui/searchBar";
 
 function NewSale() {
 
@@ -24,7 +25,7 @@ function NewSale() {
   const [lastPage, setLastPage] = useState(1);
 
   const [customerName, setCustomerName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState('+998');
   const [payment, setPayment] = useState('');
 
   const cart = useCartStore(state => state.cart);
@@ -111,10 +112,7 @@ function NewSale() {
           <div className="border-top mt-2"></div>
           <div className="d-flex justify-content-between align-items-center py-2">
             <StockUnitBadges/>
-            <div className="d-flex gap-2">
-              <Input className="rounded-5 border-primary" placeholder='Qidiruv...'/>
-              <button className="btn btn-primary rounded-5">Qidirish</button>
-            </div>
+            <SearchBar/>
           </div>
           <div className="border-top mb-3"></div>
           {
