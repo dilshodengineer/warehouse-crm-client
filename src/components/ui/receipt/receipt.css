@@ -1,7 +1,7 @@
-h4{
+.receipt-header h4{
     text-align: center;
 }
-h6{
+.receipt-header h6{
     font-size: 14px;
     text-align: center;
 }

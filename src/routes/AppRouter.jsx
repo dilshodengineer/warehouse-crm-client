@@ -39,6 +39,7 @@ import ProtectedRoute from "../routes/ProtectedRoute";
 import AddProduct from "../pages/Warehouse/AddProduct";
 import ShowProduct from "../pages/Warehouse/ShowProduct";
 import EditProduct from "../pages/Warehouse/EditProduct";
+import CustomerReceipt from "../pages/Sales/CustomerReceipt";
 
 function AppRouter() {
   return (
@@ -62,14 +63,15 @@ function AppRouter() {
           {/* SALES */}
           <Route path="/sales/new" element={<NewSale />} />
           <Route path="/sales/history" element={<SalesHistory />} />
+          <Route path="/sales/history/:id" element={<CustomerReceipt/>} />
 
           {/* WAREHOUSE */}
           <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ShowProduct/>}/>
+          <Route path="/products/:id" element={<ShowProduct/>} />
           <Route path="/stock-batches" element={<StockBatches />} />
           <Route path="/stock-balance" element={<StockBalance />} />
-          <Route path="/products/create" element={<AddProduct/>}/>
-          <Route path="/products/:id/edit" element={<EditProduct/>}/>
+          <Route path="/products/create" element={<AddProduct/>} />
+          <Route path="/products/:id/edit" element={<EditProduct/>} />
 
           {/* FINANCE */}
           <Route path="/expenses" element={<Expenses />} />
@@ -89,7 +91,7 @@ function AppRouter() {
 
         </Route>
 
-        <Route path="/receipt" element={<Receipt/>}/>
+        <Route path="/receipt" element={<Receipt/>} />
 
       </Route>
 

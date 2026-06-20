@@ -10,7 +10,6 @@ function ReceiptTable({ data }) {
         <th>Miqdori</th>
         <th>Narxi</th>
         <th>Umumiy</th>
-        <th>Boshqa</th>
       </tr>
       </thead>
       <tbody>
@@ -24,7 +23,6 @@ function ReceiptTable({ data }) {
         <td>
           1 200 000 so'm
         </td>
-        <td></td>
       </tr>
       </tbody>
     </table>

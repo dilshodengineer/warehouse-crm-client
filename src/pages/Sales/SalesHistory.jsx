@@ -88,7 +88,7 @@ function SalesHistory() {
                 <td>
                   <div className="d-flex gap-2 align-items-center">
                     <small>
-                      <Link to={`/sales/${item.id}`} className="text-secondary">
+                      <Link to={`/sales/history/${item.id}`} className="text-secondary">
                         Batafsil <i className="bi bi-box-arrow-up-right"></i>
                       </Link>
                     </small>
