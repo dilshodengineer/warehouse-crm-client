@@ -73,7 +73,7 @@ function SalesHistory() {
           <tbody>
           {
             data.map((item, index) => (
-              <tr>
+              <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.customer}</td>
                 <td>

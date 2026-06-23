@@ -1,68 +1,107 @@
-import React, {useEffect, useState} from 'react';
-import PageWindow from "../../components/layout/PageWindow";
-import ReceiptTable from "../../components/layout/sales/ReceiptTable";
-import {useParams} from "react-router-dom";
-import {getSale} from "../../services/SaleService";
-import PaymentStatus from "../../components/ui/payment-status/PaymentStatus";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import PageWindow from '../../components/layout/PageWindow';
+import ReceiptTable from '../../components/layout/sales/ReceiptTable';
+import PaymentStatus from '../../components/ui/payment-status/PaymentStatus';
+
+import { getSale } from '../../services/SaleService';
+import Loader from "../../components/ui/Loader";
+import Message from "../../components/ui/Message";
 
 function CustomerReceipt() {
+  const { id } = useParams();
 
-  const [sale, setSale] = useState([]);
+  const [sale, setSale] = useState({
+    items: [],
+  });
+
   const [isLoading, setIsLoading] = useState(true);
-  const [errors, setErrors] = useState(null);
-  const {id} = useParams();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-
-    const fetchSoldReceipt = async () => {
+    const fetchSale = async () => {
       try {
-        setIsLoading(true);
+        setError(null);
+
         const response = await getSale(id);
 
-        setSale(response);
-
-        console.log(response);
-
+        setSale({
+          items: [],
+          ...response,
+        });
       } catch (err) {
-        setErrors(err.response?.data?.errors || "Sotilgan mollarni yuklash bilan muammo.");
+        setError(
+          err?.response?.data?.message ||
+          "Sotuv ma'lumotlarini yuklashda xatolik yuz berdi."
+        );
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
-    fetchSoldReceipt();
-  }, [])
+    fetchSale();
+  }, [id]);
 
+  if (isLoading) {
+    return (
+      <PageWindow>
+        <Loader/>
+      </PageWindow>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageWindow>
+        <Message message={error} type="danger"/>
+      </PageWindow>
+    );
+  }
 
   return (
     <PageWindow>
-      <h3>Sotib olingan mollar.</h3>
-      <div className="border-bottom mb-4 mt-2"></div>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-5">
-            <table className="table table-striped">
-              <tbody>
-              <tr>
-                <td>Ismi:</td>
-                <td>{sale.customer}</td>
-              </tr>
-              <tr>
-                <td>To'lov:</td>
-                <td><PaymentStatus status={sale.payment_status}/></td>
-              </tr>
-              <tr>
-                <td>Telefon:</td>
-                <td><a href={`tel:998${sale.phone}`} className="text-secondary">{sale.phone}</a></td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+      <h3>Sotib olingan mollar</h3>
+
+      <div className="border-bottom mb-4 mt-2" />
+
+      <div className="row">
+        <div className="col-md-5">
+          <table className="table table-striped">
+            <tbody>
+            <tr>
+              <td>Ismi</td>
+              <td>{sale.customer}</td>
+            </tr>
+
+            <tr>
+              <td>To'lov</td>
+              <td>
+                <PaymentStatus status={sale.payment_status} />
+              </td>
+            </tr>
+
+            <tr>
+              <td>Telefon</td>
+              <td>
+                <a
+                  href={`tel:${sale.phone}`}
+                  className="text-secondary"
+                >
+                  {sale.phone}
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div className="border-bottom mb-2"></div>
-      <p className="fs-5 mt-3 mb-2 fw-semibold">Sotib olingan maxsulotlar</p>
-      <ReceiptTable data={sale.items}/>
+
+      <div className="border-bottom mb-3" />
+
+      <h5>Sotib olingan mahsulotlar</h5>
+
+      <ReceiptTable items={sale.items} />
     </PageWindow>
   );
 }
