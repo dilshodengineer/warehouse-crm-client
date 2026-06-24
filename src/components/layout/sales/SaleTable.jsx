@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatStock} from '../../../utils/FormatStock';
+import { formatStock } from '../../../utils/formatStock';
 import {getUnitBadge} from '../../../utils/getUnitBadge';
 import {Link} from 'react-router-dom';
 import {useCartStore} from '../../../stores/cartStore';
