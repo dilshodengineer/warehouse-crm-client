@@ -43,7 +43,7 @@ export const useCartStore = create(
       },
 
       updateQuantity: (id, quantity) => {
-        const qty = Number(quantity);
+        const qty = quantity;
         set({
           cart: get().cart.map(item =>
             item.product_id === id

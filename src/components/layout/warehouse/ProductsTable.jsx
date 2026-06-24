@@ -1,7 +1,8 @@
 import React from 'react';
-import { formatStock } from '../../../utils/FormatStock';
+import { formatStock } from '../../../utils/formatStock';
 import { getUnitBadge } from '../../../utils/getUnitBadge';
 import { Link } from 'react-router-dom';
+import { formatPrice } from '../../../utils/formatPrice';
 
 const ProductsTable = ({ data, handleClick }) => {
     return (
@@ -34,7 +35,9 @@ const ProductsTable = ({ data, handleClick }) => {
                                 </div>
                             </td>
 
-                            <td>so'm</td>
+                            <td>
+                                <b>{formatPrice(item.price)}</b> so'm
+                            </td>
 
                             <td>
                                 <div className="d-flex align-items-center gap-2">
