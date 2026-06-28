@@ -45,8 +45,8 @@ const SaleTable = ({data}) => {
 
               <td>
                 <div className="d-flex align-items-center gap-1">
-                  <span>{formatPrice(item.price)} </span>
-                  <span>/ so'm</span>
+                  <span>{formatPrice(item.price)} - </span>
+                  <span>so'm</span>
                 </div>
               </td>
 

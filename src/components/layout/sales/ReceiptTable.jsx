@@ -40,7 +40,7 @@ function ReceiptTable({ items = [] }) {
           </td>
 
           <td>
-            {Number(item.subtotal).toLocaleString('uz-UZ')} so'm
+            {formatPrice(item.subtotal)} so'm
           </td>
         </tr>
       ))}
