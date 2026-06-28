@@ -65,7 +65,7 @@ function SalesHistory() {
             <th>#</th>
             <th>Ismi</th>
             <th>Sana</th>
-            <th>Tel: +998</th>
+            <th>Aloqa</th>
             <th>Status</th>
             <th>Boshqa</th>
           </tr>
@@ -86,7 +86,7 @@ function SalesHistory() {
                   <PaymentStatus status={item.payment_status}/>
                 </td>
                 <td>
-                  <div className="d-flex gap-2 align-items-center">
+                  <div className="d-flex gap-4 align-items-center">
                     <small>
                       <Link to={`/sales/history/${item.id}`} className="text-secondary">
                         Batafsil <i className="bi bi-box-arrow-up-right"></i>

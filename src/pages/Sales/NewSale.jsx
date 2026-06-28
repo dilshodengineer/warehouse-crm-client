@@ -107,7 +107,7 @@ function NewSale() {
     <div className="row">
       <div className="col-7">
         <div className="border rounded-3 shadow-sm p-3 bg-white">
-          <h4>Sotuvdagi mahsulotlar</h4>
+          <h3>Sotuvdagi mahsulotlar</h3>
 
           <div className="border-top mt-2"></div>
           <div className="d-flex justify-content-between align-items-center py-2">

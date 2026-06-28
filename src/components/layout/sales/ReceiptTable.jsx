@@ -2,6 +2,7 @@ import React from 'react';
 import {formatPrice} from "../../../utils/formatPrice";
 import {getUnitBadge} from "../../../utils/getUnitBadge";
 import {formatStock} from "../../../utils/formatStock";
+import {getUnitForm} from "../../../utils/getUnitForm";
 
 function ReceiptTable({ items = [] }) {
   if (!items.length) {
@@ -18,7 +19,6 @@ function ReceiptTable({ items = [] }) {
       <tr>
         <th>#</th>
         <th>Nomi</th>
-        <th>Miqdori</th>
         <th>Narxi</th>
         <th>Umumiy</th>
       </tr>
@@ -32,15 +32,17 @@ function ReceiptTable({ items = [] }) {
           <td>{item.product_name}</td>
 
           <td>
-            {formatStock(item.unit, item.quantity)} {getUnitBadge(item.unit).content}
+            <div className="d-flex gap-2">
+              <span>1 {getUnitForm(item.unit)} =</span>
+              <span>{formatPrice(item.price)} so'm</span>
+            </div>
           </td>
 
           <td>
-            {formatPrice(item.price)} so'm
-          </td>
-
-          <td>
-            {formatPrice(item.subtotal)} so'm
+            <div className="d-flex gap-2">
+              <span>{formatStock(item.unit, item.quantity)} {getUnitBadge(item.unit).content} =</span>
+              <span className="fw-semibold">{formatPrice(item.subtotal)} so'm</span>
+            </div>
           </td>
         </tr>
       ))}

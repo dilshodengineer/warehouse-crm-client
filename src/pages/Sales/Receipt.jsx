@@ -8,7 +8,6 @@ function Receipt(){
 
   const sale = location.state?.sale;
 
-
   if (!sale) {
     return (
       <div className="text-danger text-center">
@@ -17,14 +16,12 @@ function Receipt(){
     );
   }
 
-
   return (
     <div className="receipt-page">
 
       <div className="receipt-center">
         <div>
-          <ReceiptPreview sale={sale}/>
-          <div className="d-flex justify-content-center gap-3 pt-2 pb-3 bg-white">
+          <div className="d-flex justify-content-center gap-3 pt-2 pb-2 border-bottom bg-white">
             <button className="btn btn-secondary px-4 rounded-5 btn-sm print-btn">
               Ortga qaytish
             </button>
@@ -34,7 +31,10 @@ function Receipt(){
             >
               Chop etish
             </button>
+
           </div>
+
+          <ReceiptPreview sale={sale}/>
         </div>
       </div>
 

@@ -1,5 +1,7 @@
 import {formatStock} from "../../../utils/formatStock";
 import {getUnitForm} from "../../../utils/getUnitForm";
+import {formatPrice} from "../../../utils/formatPrice";
+import {formatDate} from "../../../utils/formatDate";
 
 function ReceiptPreview({sale}) {
 
@@ -9,12 +11,10 @@ function ReceiptPreview({sale}) {
       <div className="receipt-header">
 
         <h4>Haridor uchun chek</h4>
-        <h6>(-: Haridingiz uchun raxmat :-)</h6>
+        <h6>Haridingiz uchun raxmat</h6>
 
         <p className="receipt-date">
-          {new Date(
-            sale.created_at
-          ).toLocaleString()}
+          {formatDate(sale.created_at)}
         </p>
 
       </div>
@@ -32,11 +32,11 @@ function ReceiptPreview({sale}) {
 
           <div className="receipt-row">
             <span>
-              1kg = {item.price} so'm
+              1 {getUnitForm(item.unit)} = {formatPrice(item.price)} so'm
             </span>
 
             <span>
-              {item.subtotal} so'm
+              {formatPrice(item.subtotal)} so'm
             </span>
           </div>
 
@@ -47,10 +47,10 @@ function ReceiptPreview({sale}) {
       ))}
 
       <strong className="total-amount">
-        Jami: {sale.total_amount} so'm
+        Jami: {formatPrice(sale.total_amount)} so'm
       </strong>
 
-      <hr/>
+      <div className="border-bottom"></div>
 
 
     </div>

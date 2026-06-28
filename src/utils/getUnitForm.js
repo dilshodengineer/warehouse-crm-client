@@ -1,11 +1,11 @@
 export const getUnitForm = (unit) => {
   switch (unit){
     case "pcs":
-      return "Dona";
+      return "dona";
     case "l":
       return "L";
     case "kg":
-      return "KG";
+      return "kg";
     default:
       return "miqdor";
   }
