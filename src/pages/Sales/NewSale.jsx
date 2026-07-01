@@ -9,7 +9,7 @@ import {getUnitBadge} from '../../utils/getUnitBadge';
 import {useCartStore} from '../../stores/cartStore';
 import {createSale} from '../../services/SaleService';
 import SaleTable from '../../components/layout/sales/SaleTable';
-import {formatPrice} from "../../utils/formatPrice";
+import {formatPrice, formatPriceInput} from "../../utils/formatPrice";
 import Pagination from "../../components/ui/Pagination";
 import SearchBar from "../../components/ui/searchBar";
 
@@ -24,7 +24,7 @@ function NewSale() {
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
 
-  const [customerName, setCustomerName] = useState('');
+  const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState('+998');
   const [payment, setPayment] = useState('');
 
@@ -55,6 +55,10 @@ function NewSale() {
 
     fetchProducts()
   }, [currentPage]);
+
+  const handlePriceChange = (e) => {
+    setPayment(formatPriceInput(e.target.value));
+  };
 
   const handleSell = async (e) => {
     e.preventDefault();
@@ -234,13 +238,13 @@ function NewSale() {
 
                 <form onSubmit={handleSell}>
                   <div className="d-flex gap-3">
-                    <Input type='number'
+                    <Input type='text'
                            placeholder="Pul..."
                            label="To'lanayotgan pul"
                            id='money'
                            className={`mt-1 mb-3 py-2 ${disable ? 'bg-light border' : ''}`}
                            value={payment}
-                           onChange={(e) => setPayment(e.target.value)}
+                           onChange={handlePriceChange}
                            disabled={disable}
                     />
 
