@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import PageWindow from '../../components/layout/PageWindow';
 import ReceiptTable from '../../components/layout/sales/ReceiptTable';
 import PaymentStatus from '../../components/ui/payment-status/PaymentStatus';
-import {formatPrice} from "../../utils/formatPrice";
+import { formatPrice } from "../../utils/formatPrice";
 
-import {getSale} from '../../services/SaleService';
+import { getSale } from '../../services/SaleService';
 import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
 
 function CustomerReceipt() {
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [sale, setSale] = useState({
     items: [],
@@ -47,7 +47,7 @@ function CustomerReceipt() {
   if (isLoading) {
     return (
       <PageWindow>
-        <Loader/>
+        <Loader />
       </PageWindow>
     );
   }
@@ -55,48 +55,79 @@ function CustomerReceipt() {
   if (error) {
     return (
       <PageWindow>
-        <Message message={error} type="danger"/>
+        <Message message={error} type="danger" />
       </PageWindow>
     );
   }
 
   return (
     <PageWindow>
-      <h3>Savdo ma'lumotlari</h3>
+      <h4>Haridor ma'lumotlari</h4>
 
       <div className="border-bottom border-secondary mb-4 mt-2">
       </div>
 
       <div className="row">
-        <div className="col-md-5">
-          <table className="table table-bordered">
+        <div className="col-md-6">
+          <table className="table table-striped">
             <tbody>
-            <tr>
-              <td>Haridor</td>
-              <td>{sale.customer}</td>
-            </tr>
+              <tr>
+                <th>Haridorning ismi:</th>
+                <td>{sale.customer}</td>
+              </tr>
 
-            <tr>
-              <td>To'lov</td>
-              <td>
-                <div className="d-flex gap-2 align-items-center">
-                  <PaymentStatus status={sale.payment_status}/>
-                  <span>{formatPrice(sale.paid_amount)} so'm</span>
-                </div>
-              </td>
-            </tr>
+              <tr>
+                <th>Aloqa uchun:</th>
+                <td>
+                  <a
+                    href={`tel:${sale.phone}`}
+                    className="text-secondary"
+                  >
+                    {sale.phone}
+                  </a>
+                </td>
+              </tr>
 
-            <tr>
-              <td>Telefon</td>
-              <td>
-                <a
-                  href={`tel:${sale.phone}`}
-                  className="text-secondary"
-                >
-                  {sale.phone}
-                </a>
-              </td>
-            </tr>
+              <tr>
+                <th>Status:</th>
+                <td><PaymentStatus status={sale.payment_status} /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-md-6">
+          <table className="table table-striped">
+
+            <tbody>
+              <tr>
+                <th>Umumiy hisob:</th>
+                <td>
+                  <b className="text-success">
+                    {formatPrice(sale.total_amount)}
+                  </b> - so'm
+                </td>
+              </tr>
+
+              <tr>
+                <th>To'langan:</th>
+                <td>
+                  <b className="text-success">
+                    {formatPrice(sale.paid_amount)}
+                    </b> - so'm
+                </td>
+              </tr>
+
+              <tr>
+                <th>Qarzdorlik:</th>
+                <td>
+                  <div className="mb-1">
+                    <b className='text-danger'>
+                      {formatPrice(sale.total_amount - sale.paid_amount)}
+                    </b> - so'm
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -105,12 +136,12 @@ function CustomerReceipt() {
       <div className="border-bottom border-secondary my-2">
       </div>
 
-      <h5 className="mt-4">Sotib olingan mahsulotlar</h5>
+      <h4 className="mt-4">Sotilgan mahsulotlar</h4>
 
       <div className="border-bottom border-secondary my-2">
       </div>
 
-      <ReceiptTable items={sale.items}/>
+      <ReceiptTable items={sale.items} />
     </PageWindow>
   );
 }
