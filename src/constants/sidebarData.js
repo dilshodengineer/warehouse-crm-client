@@ -19,6 +19,11 @@ export const sidebarData = [
           path: "/sales/history",
           icon: "bi bi-clock-history",
         },
+        // {
+        //   title: "Ro'yxat",
+        //   path: "/sales/list",
+        //   icon: "bi bi-list-check",
+        // },
       ],
     },
   
@@ -57,7 +62,7 @@ export const sidebarData = [
         {
           title: "Xarajatlar",
           path: "/expenses",
-          icon: "bi bi-arrow-down-circle",
+          icon: "bi bi-arrow-up-circle",
         },
         {
           title: "Qarzdorlik",
@@ -65,7 +70,7 @@ export const sidebarData = [
           icon: "bi bi-exclamation-triangle",
         },
         {
-          title: "Kirimlar",
+          title: "Tushumlar",
           path: "/income",
           icon: "bi bi-arrow-down-circle",
         },

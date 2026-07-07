@@ -26,3 +26,11 @@ label{
     border-color: transparent;
     outline: 2px solid #ffc107;
 }
+.my-btn-success{
+    border: none;
+    background: #22c55e;
+    color: #ffffff;
+    border-radius: 17px;
+    padding: 5px 18px;
+    font-size: 14px;;
+}

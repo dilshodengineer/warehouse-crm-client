@@ -59,7 +59,7 @@ function SalesHistory() {
           <SearchBar/>
         </div>
         <div className="border-bottom my-2"></div>
-        <table className="table table-striped">
+        <table className="table table-bordered">
           <thead>
           <tr>
             <th>#</th>
@@ -92,8 +92,8 @@ function SalesHistory() {
                         Batafsil <i className="bi bi-box-arrow-up-right"></i>
                       </Link>
                     </small>
-                    <button className="btn btn-success btn-sm px-3 rounded-5">
-                      To'lov
+                    <button className="my-btn-success btn-sm">
+                      To'lov qilish
                     </button>
                   </div>
                 </td>

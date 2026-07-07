@@ -3,6 +3,7 @@ import Input from "../../components/ui/Input";
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../../services/ProductService';
 import LoadingBtn from '../../components/ui/LoadingBtn';
+import { formatPriceInput } from '../../utils/formatPrice';
 
 const AddProduct = () => {
 
@@ -16,6 +17,10 @@ const AddProduct = () => {
     const [stock, setStock] = useState('');
     const [unit, setUnit] = useState('kg');
     const [description, setDescription] = useState('');
+
+    const handlePriceChange = (e) => {
+        setPrice(formatPriceInput(e.target.value));
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -81,11 +86,11 @@ const AddProduct = () => {
                 <div className="col-sm-6">
                     <Input
                         label="Narxi"
-                        type="number"
+                        type="text"
                         placeholder="Narxi"
                         className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
                         value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        onChange={handlePriceChange}
                     />
 
                     {errors.price && (

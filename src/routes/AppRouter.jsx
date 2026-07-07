@@ -12,6 +12,7 @@ import Login from "../pages/Auth/Login";
 
 /* SALES */
 import NewSale from "../pages/Sales/NewSale";
+import List from "../pages/Sales/List";
 import SalesHistory from "../pages/Sales/SalesHistory";
 import Receipt from "../pages/Sales/Receipt";
 
@@ -62,6 +63,7 @@ function AppRouter() {
 
           {/* SALES */}
           <Route path="/sales/new" element={<NewSale />} />
+          <Route path="/sales/list" element={<List/>} />
           <Route path="/sales/history" element={<SalesHistory />} />
           <Route path="/sales/history/:id" element={<CustomerReceipt/>} />
 

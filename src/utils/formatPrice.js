@@ -3,7 +3,7 @@ export const formatPrice = (price) => {
 };
 
 export const formatPriceInput = (value) => {
-    const numeric = value.replace(/\s/g, "").replace(/\D/g, "");
+    const numeric = value.replace(/\D/g, "");
 
     if (!numeric) return "";
 
