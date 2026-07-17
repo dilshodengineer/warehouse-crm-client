@@ -78,7 +78,7 @@ function CustomerReceipt() {
           onClick={() => handleNavigate(sale, sale.id)}
           className="btn btn-primary px-3 rounded-5 px-4"
         >
-          chop etish <i class="bi bi-printer"></i>
+          chop etish <i className="bi bi-printer"></i>
         </button>
       </div>
 

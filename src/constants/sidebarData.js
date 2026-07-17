@@ -60,20 +60,10 @@ export const sidebarData = [
       icon: "bi bi-cash-coin",
       children: [
         {
-          title: "Xarajatlar",
-          path: "/expenses",
-          icon: "bi bi-arrow-up-circle",
-        },
-        {
-          title: "Qarzdorlik",
-          path: "/debts",
-          icon: "bi bi-exclamation-triangle",
-        },
-        {
-          title: "Tushumlar",
-          path: "/income",
-          icon: "bi bi-arrow-down-circle",
-        },
+          title: "Pul oqimi",
+          path: "/transactions",
+          icon: "bi bi-cash-coin",
+        }
       ],
     },
   

@@ -41,6 +41,7 @@ import AddProduct from "../pages/Warehouse/AddProduct";
 import ShowProduct from "../pages/Warehouse/ShowProduct";
 import EditProduct from "../pages/Warehouse/EditProduct";
 import CustomerReceipt from "../pages/Sales/CustomerReceipt";
+import Transactions from "../pages/Finance/Transactions";
 
 function AppRouter() {
   return (
@@ -76,9 +77,7 @@ function AppRouter() {
           <Route path="/products/:id/edit" element={<EditProduct/>} />
 
           {/* FINANCE */}
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/debts" element={<Debts />} />
-          <Route path="/income" element={<Income />} />
+          <Route path="/transactions" element={<Transactions />} />
 
           {/* EMPLOYEES */}
           <Route path="/employees" element={<Employees />} />
