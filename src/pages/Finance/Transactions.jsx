@@ -5,7 +5,7 @@ const Transactions = () => {
   return (
     <div className='container-fluid bg-white rounded-3 border shadow-sm p-3 pb-5'>
         <h3>Kirim va chiqim</h3>
-        <div className="border-bottom my-2"></div>
+        <div className="border-bottom mt-2 mb-4"></div>
 
         <TransactionTable/>
     </div>

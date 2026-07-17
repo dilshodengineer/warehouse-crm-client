@@ -1,5 +1,4 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 /* LAYOUTS */
 import AuthLayout from "../layouts/AuthLayout";
@@ -11,37 +10,33 @@ import Login from "../pages/Auth/Login";
 /* DASHBOARD */
 
 /* SALES */
-import NewSale from "../pages/Sales/NewSale";
 import List from "../pages/Sales/List";
-import SalesHistory from "../pages/Sales/SalesHistory";
+import NewSale from "../pages/Sales/NewSale";
 import Receipt from "../pages/Sales/Receipt";
+import SalesHistory from "../pages/Sales/SalesHistory";
+import CustomerReceipt from "../pages/Sales/CustomerReceipt";
 
 /* WAREHOUSE */
 import Products from "../pages/Warehouse/Products";
-import StockBatches from "../pages/Warehouse/StockBatches";
-import StockBalance from "../pages/Warehouse/StockBalance";
+import AddProduct from "../pages/Warehouse/AddProduct";
+import EditProduct from "../pages/Warehouse/EditProduct";
+import ShowProduct from "../pages/Warehouse/ShowProduct";
 
 /* FINANCE */
-import Expenses from "../pages/Finance/Expenses";
-import Debts from "../pages/Finance/Debts";
-import Income from "../pages/Finance/Income";
+import Transactions from "../pages/Finance/Transactions";
 
 /* EMPLOYEES */
 import Employees from "../pages/Employees/Employees";
 import Roles from "../pages/Employees/Roles";
 
 /* REPORTS */
-import SalesReport from "../pages/Reports/SalesReport";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import TestPage from "../pages/Dashboard/TestPage";
 import ExpensesReport from "../pages/Reports/ExpensesReport";
 import InventoryReport from "../pages/Reports/InventoryReport";
-import TestPage from "../pages/Dashboard/TestPage";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import SalesReport from "../pages/Reports/SalesReport";
 import ProtectedRoute from "../routes/ProtectedRoute";
-import AddProduct from "../pages/Warehouse/AddProduct";
-import ShowProduct from "../pages/Warehouse/ShowProduct";
-import EditProduct from "../pages/Warehouse/EditProduct";
-import CustomerReceipt from "../pages/Sales/CustomerReceipt";
-import Transactions from "../pages/Finance/Transactions";
+import TransactionForm from "../components/forms/TransactionForm";
 
 function AppRouter() {
   return (
@@ -71,13 +66,12 @@ function AppRouter() {
           {/* WAREHOUSE */}
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ShowProduct/>} />
-          <Route path="/stock-batches" element={<StockBatches />} />
-          <Route path="/stock-balance" element={<StockBalance />} />
           <Route path="/products/create" element={<AddProduct/>} />
           <Route path="/products/:id/edit" element={<EditProduct/>} />
 
           {/* FINANCE */}
           <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions/form" element={<TransactionForm />} />
 
           {/* EMPLOYEES */}
           <Route path="/employees" element={<Employees />} />

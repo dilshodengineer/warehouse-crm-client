@@ -63,6 +63,11 @@ export const sidebarData = [
           title: "Pul oqimi",
           path: "/transactions",
           icon: "bi bi-cash-coin",
+        },
+        {
+          title: "Tushum",
+          path: "/transactions/form",
+          icon: "bi bi-download"
         }
       ],
     },
