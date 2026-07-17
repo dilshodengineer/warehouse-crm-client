@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import PageWindow from '../../components/layout/PageWindow';
 import ReceiptTable from '../../components/layout/sales/ReceiptTable';
@@ -12,6 +12,7 @@ import Message from "../../components/ui/Message";
 
 function CustomerReceipt() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [sale, setSale] = useState({
     items: [],
@@ -19,6 +20,15 @@ function CustomerReceipt() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleNavigate = (sale, id) => {
+    navigate('/receipt', {
+      state: {
+        sale,
+        from: "/sales/history/" + id,
+      }
+    });
+  }
 
   useEffect(() => {
     const fetchSale = async () => {
@@ -62,7 +72,15 @@ function CustomerReceipt() {
 
   return (
     <PageWindow>
-      <h4>Haridor ma'lumotlari</h4>
+      <div className="d-flex justify-content-between align-items-end mb-3">
+        <h4>Haridor ma'lumotlari</h4>
+        <button
+          onClick={() => handleNavigate(sale, sale.id)}
+          className="btn btn-primary px-3 rounded-5 px-4"
+        >
+          chop etish <i class="bi bi-printer"></i>
+        </button>
+      </div>
 
       <div className="border-bottom border-secondary mb-4 mt-2">
       </div>
@@ -114,7 +132,7 @@ function CustomerReceipt() {
                 <td>
                   <b className="text-success">
                     {formatPrice(sale.paid_amount)}
-                    </b> - so'm
+                  </b> - so'm
                 </td>
               </tr>
 

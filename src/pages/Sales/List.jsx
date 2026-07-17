@@ -57,7 +57,7 @@ const List = () => {
                 navigate('/receipt', {
                     state: {
                         sale,
-                        from: "/sales/new"
+                        from: "/sales/list"
                     }
                 });
 
