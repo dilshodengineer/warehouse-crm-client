@@ -10,7 +10,7 @@ export const getSale = async (id) => {
   return data?.data;
 };
 
-export const createSale = (data) => api.post('/sales', data);
+export const createSale = async (data) => await api.post('/sales', data);
 
-export const updateSale = (id, data) => api.put(`/sales/${id}`, data);
+export const updateSale = async (id, data) => await api.put(`/sales/${id}`, data);
 

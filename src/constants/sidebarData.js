@@ -7,7 +7,7 @@ export const sidebarData = [
   
     {
       title: "Savdo",
-      icon: "bi bi-cart",
+      icon: "bi bi  -cart",
       children: [
         {
           title: "Savdo qilish",
@@ -65,9 +65,9 @@ export const sidebarData = [
           icon: "bi bi-cash-coin",
         },
         {
-          title: "Tushum",
+          title: "Tushum va chiqim",
           path: "/transactions/form",
-          icon: "bi bi-download"
+          icon: "bi bi-arrow-down-up"
         }
       ],
     },
