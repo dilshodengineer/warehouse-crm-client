@@ -1,24 +1,41 @@
 import React, { useState } from 'react';
 import Input from '../ui/Input';
 import LoadingBtn from '../ui/LoadingBtn';
+import { createEmpployee } from '../../services/EmployeeService';
 
 const EmployeeForm = () => {
+
+    const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [selected, setSelected] = useState('worker');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const payload = { 
-            name, username, password, 
-            role: selected
+        try {
+
+            setLoading(true);
+
+            const payload = {
+                name, username, password,
+                role: selected
+            };
+
+
+            const response = await createEmpployee(payload);
+
+            console.log(response);
+
+        } catch (e) {
+            setError(e.response.data.errors || 'Xatolik yuz berdi');
+        }finally{
+            setLoading(false);
         };
 
-        console.log(payload);
-        
     }
 
     return (
@@ -27,32 +44,61 @@ const EmployeeForm = () => {
                 <div className="col-md-5 mt-2">
                     <Input
                         label="To'liq ismi"
+                        id='name'
                         placeholder='Ismi...'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className='mb-2'
                     />
+
+                    {
+                        error.name && (
+                            <div className="text-danger small mb-2">
+                                {error.name[0]}
+                            </div>
+                        )
+                    }
+
                 </div>
 
                 <div className="col-md-5 mt-2">
                     <Input
                         label="Login / Foydalanuvchi_ID"
+                        id='username'
                         placeholder='Login / ID ...'
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         className='mb-2'
                     />
+
+                    {
+                        error.username && (
+                            <div className="text-danger small mb-2">
+                                {error.username[0]}
+                            </div>
+                        )
+                    }
                 </div>
 
                 <div className="col-md-5 mt-2">
                     <Input
                         label="Paroli"
+                        id='password'
                         placeholder='****'
                         type='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className='mb-2'
                     />
+
+                    {
+                        error.password && (
+                            <div className="text-danger small mb-2">
+                                {error.password[0]}
+                            </div>
+                        )
+                    }
+
                 </div>
 
                 <div className="col-md-5 mt-2">
@@ -92,10 +138,18 @@ const EmployeeForm = () => {
                             </label>
                         </div>
                     </div>
+
+                    {
+                        error.role && (
+                            <div className="text-danger small mb-2">
+                                {error.role[0]}
+                            </div>
+                        )
+                    }
                 </div>
 
                 <div className="text-end mt-2 col-md-10">
-                    <LoadingBtn content='Yaratish' isLoading={false} />
+                    <LoadingBtn content='Yaratish' isLoading={loading} />
                 </div>
 
             </form>

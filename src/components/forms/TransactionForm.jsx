@@ -46,87 +46,82 @@ const TransactionForm = () => {
         }
     };
     return (
-        <div className='container-fluid bg-white rounded-3 border shadow-sm p-3 pb-5'>
-            <h3>Tushum yoki chiqim kiritish</h3>
-            <div className="border-top mt-2 mb-4"></div>
+        <form onSubmit={handleSubmit} className="row">
+            <div className="col-sm-6">
+                <Input
+                    label="Kimdan / Kimga"
+                    placeholder="Kimdan / Kimga"
+                    className="mt-1 mb-3"
+                    value={title}
+                    onChange={(e) => { setTitle(e.target.value) }}
+                />
 
-            <form onSubmit={handleSubmit} className="row">
-                <div className="col-sm-6">
-                    <Input
-                        label="Kimdan / Kimga"
-                        placeholder="Kimdan / Kimga"
-                        className="mt-1 mb-3"
-                        value={title}
-                        onChange={(e) => { setTitle(e.target.value) }}
-                    />
-
-                    {error.title && (
-                        <div className="text-danger mb-4 small">
-                            {error.title[0]}
-                        </div>
-                    )}
-                </div>
-
-                <div className="col-sm-6">
-                    <Input
-                        label="Sabab"
-                        placeholder="Sabab"
-                        className="mt-1 mb-3"
-                        value={description}
-                        onChange={(e) => { setDescription(e.target.value) }}
-                    />
-
-                    {error.description && (
-                        <div className="text-danger mb-4 small">
-                            {error.description[0]}
-                        </div>
-                    )}
-                </div>
-
-                <div className="col-sm-6">
-                    <Input
-                        label="Pul-Miqdori"
-                        placeholder="Pul-Miqdori"
-                        className="mt-1 mb-3"
-                        value={amount}
-                        onChange={(e) => { setAmount(e.target.value) }}
-                        type='number'
-                    />
-
-                    {error.amount && (
-                        <div className="text-danger mb-4 small">
-                            {error.amount[0]}
-                        </div>
-                    )}
-                </div>
-
-                <div className="col-sm-6">
-                    <label htmlFor="select">Tanlang</label>
-                    <div className="d-flex mt-1">
-                        <select
-                            value={type}
-                            onChange={handleChange}
-                            id="select"
-                            className='input text-secondary'
-                        >
-                            <option value="">Tushum / chiqim</option>
-                            <option value="income">Tushum</option>
-                            <option value="expense">Chiqim</option>
-                        </select>
+                {error.title && (
+                    <div className="text-danger mb-4 small">
+                        {error.title[0]}
                     </div>
+                )}
+            </div>
 
-                    {error.type && (
-                        <div className="text-danger mb-4 small">
-                            {error.type[0]}
-                        </div>
-                    )}
-                </div>
-                <div className="text-end">
-                    <LoadingBtn content="Yuborish" isLoading={isLoading} />
+            <div className="col-sm-6">
+                <Input
+                    label="Sabab"
+                    placeholder="Sabab"
+                    className="mt-1 mb-3"
+                    value={description}
+                    onChange={(e) => { setDescription(e.target.value) }}
+                />
+
+                {error.description && (
+                    <div className="text-danger mb-4 small">
+                        {error.description[0]}
+                    </div>
+                )}
+            </div>
+
+            <div className="col-sm-6">
+                <Input
+                    label="Pul-Miqdori"
+                    placeholder="Pul-Miqdori"
+                    className="mt-1 mb-3"
+                    value={amount}
+                    onChange={(e) => { setAmount(e.target.value) }}
+                    type='number'
+                />
+
+                {error.amount && (
+                    <div className="text-danger mb-4 small">
+                        {error.amount[0]}
+                    </div>
+                )}
+            </div>
+
+            <div className="col-sm-6">
+                <label htmlFor="select">Tanlang</label>
+                <div className="d-flex mt-1">
+                    <select
+                        value={type}
+                        onChange={handleChange}
+                        id="select"
+                        className='input text-secondary'
+                    >
+                        <option value="">Tushum / chiqim</option>
+                        <option value="income">Tushum</option>
+                        <option value="expense">Chiqim</option>
+                    </select>
                 </div>
 
-            </form>
-        </div>
+                {error.type && (
+                    <div className="text-danger mb-4 small">
+                        {error.type[0]}
+                    </div>
+                )}
+            </div>
+            <div className="text-end">
+                <LoadingBtn content="Yuborish" isLoading={isLoading} />
+            </div>
+
+        </form>
     )
 }
 

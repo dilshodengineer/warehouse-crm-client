@@ -21,7 +21,7 @@ const TransactionTable = ({ transactions }) => {
 
                 {
                     transactions.map((cash, index) => (
-                        <tr>
+                        <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{cash.title}</td>
                             <td>

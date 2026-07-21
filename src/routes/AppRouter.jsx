@@ -27,7 +27,7 @@ import Transactions from "../pages/Finance/Transactions";
 
 /* EMPLOYEES */
 import Employees from "../pages/Employees/Employees";
-import Roles from "../pages/Employees/Roles";
+import AddEmployee from "../pages/Employees/AddEmployee";
 
 /* REPORTS */
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -36,7 +36,7 @@ import ExpensesReport from "../pages/Reports/ExpensesReport";
 import InventoryReport from "../pages/Reports/InventoryReport";
 import SalesReport from "../pages/Reports/SalesReport";
 import ProtectedRoute from "../routes/ProtectedRoute";
-import TransactionForm from "../components/forms/TransactionForm";
+import AddTransaction from "../pages/Finance/AddTransaction";
 
 function AppRouter() {
   return (
@@ -71,11 +71,11 @@ function AppRouter() {
 
           {/* FINANCE */}
           <Route path="/transactions" element={<Transactions />} />
-          <Route path="/transactions/form" element={<TransactionForm />} />
+          <Route path="/transactions/form" element={<AddTransaction />} />
 
           {/* EMPLOYEES */}
           <Route path="/employees" element={<Employees />} />
-          <Route path="/roles" element={<Roles />} />
+          <Route path="/employees/add" element={<AddEmployee />} />
 
           <Route path="/test" element={<h1>TEST ROUTE WORKS</h1>} />
 

@@ -7,7 +7,7 @@ export const sidebarData = [
   
     {
       title: "Savdo",
-      icon: "bi bi  -cart",
+      icon: "bi bi-cart",
       children: [
         {
           title: "Savdo qilish",
@@ -82,9 +82,9 @@ export const sidebarData = [
           icon: "bi bi-person-badge",
         },
         {
-          title: "Rollar / huquqlar",
-          path: "/roles",
-          icon: "bi bi-shield-lock",
+          title: "Xodim qo'shish",
+          path: "/employees/add",
+          icon: "bi bi-person-plus",
         },
       ],
     },
