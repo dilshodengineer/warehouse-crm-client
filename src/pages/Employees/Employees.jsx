@@ -1,54 +1,15 @@
 import React from 'react'
+import PageWindow from '../../components/layout/PageWindow'
+import UsersTable from '../../components/tables/UsersTable'
 
 const Employees = () => {
   return (
-    <div className='row'>
+    <PageWindow>
         <h4>Xodimlar</h4>
-        <table className="table table-bordered">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Ismi</th>
-                <th>Status</th>
-                <th>Boshqarish</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>Vali Jumayev</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>John Doe</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Ali Hayitov</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Kimdir</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div className="border-bottom mb-2"></div>
+
+        <UsersTable/>
+    </PageWindow>
   )
 }
 
