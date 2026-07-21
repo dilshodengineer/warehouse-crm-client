@@ -7,11 +7,13 @@ import Message from '../../components/ui/Message';
 
 const Transactions = () => {
 
-  const [data, setData] = useState([]);
+  const [forbidden, setForbidden] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsloading] = useState(false);
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
-  const [isLoading, setIsloading] = useState(false);
+
 
   const fetchTransactions = async () => {
 
@@ -29,7 +31,13 @@ const Transactions = () => {
 
 
     } catch (e) {
-      setError(e.response?.data?.message || "Xatolik yuz berdi");
+
+      if (e.response.status === 403) {
+        setForbidden(true);
+      } else {
+        setError("Xatolik yuz berdi");
+      }
+
     } finally {
       setIsloading(false)
     }
@@ -51,9 +59,11 @@ const Transactions = () => {
 
       {isLoading && <Loader />}
 
+      {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger" />}
+
       {error && <Message message={error} type="danger" />}
 
-      {!isLoading && !error && (
+      {!isLoading && !error && !forbidden && (
         <>
           <TransactionTable transactions={data} />
 

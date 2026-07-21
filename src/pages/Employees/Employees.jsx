@@ -24,8 +24,8 @@ const Employees = () => {
 
     } catch (e) {
 
-      setError(e.data);
-      console.log(e.data);
+      setError(e.response.status);
+      console.log(e.response);
 
     } finally {
 
@@ -49,7 +49,7 @@ const Employees = () => {
       
       {loading && <Loader/>}
 
-      {error && <Message type='danger' message={error.data.message}/>}
+      {error === 403 && <Message type='danger' message='Bu sahifa faqat "Ega" uchun.'/> }
 
       {!loading && !error && (
         <EmployeesTable employees={data} />

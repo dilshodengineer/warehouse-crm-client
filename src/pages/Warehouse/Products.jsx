@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PageWindow from '../../components/layout/PageWindow';
 import ConfirmModal from '../../components/ui/ConfirmModal';
 import Loader from '../../components/ui/Loader';
 import Message from '../../components/ui/Message';
-import {deleteProduct, getProducts} from '../../services/ProductService';
+import { deleteProduct, getProducts } from '../../services/ProductService';
 import StockUnitBadges from '../../components/ui/StockUnitBadges';
 import ProductsTable from '../../components/layout/warehouse/ProductsTable';
 import Pagination from "../../components/ui/Pagination";
@@ -15,6 +15,7 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
 
+  const [forbidden, setForbidden] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
@@ -72,8 +73,20 @@ function Products() {
       setIsOpen(false);
       setSelectedId(null);
 
-    } catch (err) {
-      setErrors(err.response.data.message || "Xatolik yuz berdi");
+    } catch (e) {
+
+      if (e.response.status === 403) {
+        
+        alert('')
+        setForbidden(true);
+        setErrors(null);
+
+      } else {
+
+        setErrors(e.response.data.message || "Xatolik yuz berdi");
+
+      }
+
     } finally {
       setIsDeleting(false)
     }
@@ -92,21 +105,23 @@ function Products() {
         <h3>Maxsulotlar</h3>
 
         <div className="border-bottom mt-2"></div>
-        <StockUnitBadges classSyles="my-2"/>
+        <StockUnitBadges classSyles="my-2" />
         <div className="border-bottom mb-3"></div>
+
+        {forbidden && <Message type="danger" message='Faqatgina "Ega" va "Admin" maxsulotlarni boshqara oladi' type="danger" />}
 
         {
           isLoading ? (
-            <Loader/>
+            <Loader />
           ) : errors ? (
-            <Message message={errors} type="danger"/>
+            <Message message={errors} type="danger" />
           ) : products.length === 0 ? (
-            <Message message="Hozircha mahsulotlar yo'q"/>
+            <Message message="Hozircha mahsulotlar yo'q" />
           ) : (
             <>
-              <ProductsTable data={products} handleClick={handleClick}/>
+              <ProductsTable data={products} handleClick={handleClick} />
 
-              <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={setCurrentPage}/>
+              <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={setCurrentPage} />
             </>
           )
         }

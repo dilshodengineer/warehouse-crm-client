@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../../services/ProductService';
 import LoadingBtn from '../../components/ui/LoadingBtn';
 import { formatPriceInput } from '../../utils/formatPrice';
+import Message from '../../components/ui/Message';
 
 const AddProduct = () => {
 
     const navigate = useNavigate();
 
+    const [forbidden, setForbidden] = useState(false);
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
@@ -42,13 +44,19 @@ const AddProduct = () => {
 
             navigate('/products', { replace: true });
 
-        } catch (err) {
+        } catch (e) {
 
-            if (err.response?.status === 422) {
-                setErrors(err.response.data.errors || "Xatolik yuz berdi.");
+            const status = e.response.status
+
+            if(status === 403){
+                setForbidden(true);
             }
 
-            console.log(err.response?.data || err.message);
+            if (status === 422) {
+                setErrors(e.response.data.errors || "Xatolik yuz berdi.");
+            }
+
+            // console.log(e.response?.data || e.message);
         } finally {
             setIsLoading(false);
         }
@@ -62,6 +70,8 @@ const AddProduct = () => {
 
             <div className="border-bottom my-2"></div>
 
+            {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger" />}
+
             <form
                 onSubmit={handleSubmit}
                 className="row"
@@ -70,6 +80,7 @@ const AddProduct = () => {
                 <div className="col-sm-6">
                     <Input
                         label="Nomi"
+                        id='name'
                         placeholder="Nomi"
                         className={`mt-1 mb-3 ${errors.name && 'border-danger'}`}
                         value={name}
@@ -86,6 +97,7 @@ const AddProduct = () => {
                 <div className="col-sm-6">
                     <Input
                         label="Narxi"
+                        id='price'
                         type="text"
                         placeholder="Narxi"
                         className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
@@ -103,6 +115,7 @@ const AddProduct = () => {
                 <div className="col-sm-6">
                     <Input
                         label="Miqdori"
+                        id='stock'
                         type="number"
                         placeholder="Miqdori"
                         className={`mt-1 mb-3 ${errors.stock && 'border-danger'}`}
@@ -177,6 +190,7 @@ const AddProduct = () => {
                 <div className="col-12">
                     <Input
                         label="Izoh (Ixtiyoriy)"
+                        id='description'
                         type="text"
                         placeholder="Izoh"
                         className='mt-1 mb-3'

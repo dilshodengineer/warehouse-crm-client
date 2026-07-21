@@ -12,6 +12,7 @@ const EditProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const [forbidden, setForbidden] = useState(false);
     const [errors, setErrors] = useState({});
     const [pageError, setPageError] = useState(null);
     const [pageLoading, setPageLoading] = useState(false);
@@ -41,9 +42,10 @@ const EditProduct = () => {
                 setPrice(data.price);
                 setUnit(data.unit);
                 setStock(data.stock);
-                setDescription(data.description);
-            } catch (err) {
-                setPageError(err.response.data.message || "Hatolik yus berdi");
+                setDescription(data?.description);
+            } catch (e) {
+
+                setPageError(e.response.data.message || "Hatolik yus berdi");
 
             } finally {
                 setPageLoading(false)
@@ -64,7 +66,7 @@ const EditProduct = () => {
             const data = {
                 name,
                 price,
-                stock,  
+                stock,
                 unit,
                 description
             }
@@ -73,10 +75,18 @@ const EditProduct = () => {
 
             navigate('/products', { replace: true })
 
-        } catch (err) {
-            if (err.response?.status === 422) {
-                setErrors(err.response.data.errors)
+        } catch (e) {
+
+            const staus = e.response.status;
+
+            if (staus === 403) {
+                setForbidden(true);
             }
+
+            if (staus === 422) {
+                setPageError(e.response.data.errors);
+            }
+
         } finally {
             setIsLoading(false);
         }
@@ -97,6 +107,8 @@ const EditProduct = () => {
                     <>
                         <h3>Mahsulotni yangilash</h3>
 
+                        {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger" />}
+
                         <form
                             onSubmit={handleSubmit}
                             className="row"
@@ -105,9 +117,10 @@ const EditProduct = () => {
                             <div className="col-sm-6">
                                 <Input
                                     label="Nomi"
+                                    id='name'
                                     placeholder="Nomi"
                                     className={`mt-1 mb-3 ${errors.name && 'border-danger'}`}
-                                    value={name}
+                                    value={name ?? ''}
                                     onChange={(e) => setName(e.target.value)}
                                 />
 
@@ -122,10 +135,11 @@ const EditProduct = () => {
                             <div className="col-sm-6">
                                 <Input
                                     label="Narxi"
+                                    id='price'
                                     type="number"
                                     placeholder="Narxi"
                                     className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
-                                    value={price}
+                                    value={price ?? ''}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
 
@@ -140,10 +154,11 @@ const EditProduct = () => {
                             <div className="col-sm-6">
                                 <Input
                                     label="Miqdori"
+                                    id='stock'
                                     type="number"
                                     placeholder="Miqdori"
                                     className={`mt-1 mb-3 ${errors.stock && 'border-danger'}`}
-                                    value={stock}
+                                    value={stock ?? ''}
                                     onChange={(e) => setStock(e.target.value)}
                                 />
 
@@ -215,10 +230,11 @@ const EditProduct = () => {
                             <div className="col-12">
                                 <Input
                                     label="Izoh (Ixtiyoriy)"
+                                    id='description'
                                     type="text"
                                     placeholder="Izoh"
                                     className='mt-1 mb-3'
-                                    value={description}
+                                    value={description ?? ''}
                                     onChange={(e) => setDescription(e.target.value)}
                                 />
                             </div>

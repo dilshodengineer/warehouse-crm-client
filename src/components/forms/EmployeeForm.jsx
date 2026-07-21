@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Input from '../ui/Input';
 import LoadingBtn from '../ui/LoadingBtn';
 import { createEmpployee } from '../../services/EmployeeService';
+import Message from '../ui/Message';
 
 const EmployeeForm = () => {
 
+    const [forbidden, setForbidden] = useState(false);
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
 
@@ -31,7 +33,19 @@ const EmployeeForm = () => {
             console.log(response);
 
         } catch (e) {
-            setError(e.response.data.errors || 'Xatolik yuz berdi');
+
+            const status = e.response?.status;
+
+            if(status === 403){
+                setForbidden(true);
+                return;
+            }
+
+            if (status === 422){
+                setError(e.response.data.errors || 'Xatolik yuz berdi');
+                return;
+            }
+
         }finally{
             setLoading(false);
         };
@@ -39,6 +53,9 @@ const EmployeeForm = () => {
     }
 
     return (
+        <>
+        {forbidden && <Message message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger"/>}
+
         <div className="container-fluid">
             <form className='row' onSubmit={handleSubmit}>
                 <div className="col-md-5 mt-2">
@@ -154,6 +171,7 @@ const EmployeeForm = () => {
 
             </form>
         </div>
+        </>
     )
 }
 
