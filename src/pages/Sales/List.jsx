@@ -11,6 +11,8 @@ const List = () => {
 
     const navigate = useNavigate();
 
+    const [error, setError] = useState({});
+
     const [disable, setDisable] = useState(false);
     const [customerName, setCustomerName] = useState("");
     const [phone, setPhone] = useState('+998');
@@ -66,8 +68,10 @@ const List = () => {
 
             console.log(response.data);
 
-        } catch (err) {
-            console.log(err);
+        } catch (e) {
+            if (e.response.status === 422) {
+                setError(e.response.data.errors);
+            }
         }
 
     }
@@ -176,7 +180,10 @@ const List = () => {
                                 <div className="border-top my-2"></div>
 
                                 <form onSubmit={handleSell}>
-                                    <div className="d-flex gap-3">
+                                    <small className="bg-opacity-50 px-2 py-1 my-2 d-inline-block rounded-3 bg-secondary">
+                                        Pul miqdorini kiritmasangiz avtomatik to'liq to'langan deb hisoblanadi.
+                                    </small>
+                                    <div className="d-flex gap-3 border-bottom mb-2">
                                         <Input type='text'
                                             placeholder="Pul..."
                                             label="To'lanayotgan pul"
@@ -198,22 +205,35 @@ const List = () => {
 
                                     </div>
                                     <div className="d-flex gap-3">
-                                        <Input
-                                            type='text'
-                                            placeholder="Ism Familiya..."
-                                            label="Haridorning to'liq ismi"
-                                            id="fullname"
-                                            className="mt-1 mb-3 py-2"
-                                            value={customerName}
-                                            onChange={(e) => setCustomerName(e.target.value)}
-                                        />
-                                        <Input
-                                            type="text"
-                                            placeholder="Telefon raqam..."
-                                            label='Telefon raqami'
-                                            id='call'
-                                            value={phone}
-                                            onChange={(e) => setPhone(e.target.value)} />
+                                        <div>
+                                            <Input
+                                                type='text'
+                                                placeholder="Ism Familiya..."
+                                                label="Haridorning to'liq ismi"
+                                                id="fullname"
+                                                className="mt-1 py-2"
+                                                value={customerName}
+                                                onChange={(e) => setCustomerName(e.target.value)}
+                                            />
+
+                                            {
+                                                error.customer && <span className="text-danger small">{error.customer[0]}</span>
+                                            }
+                                        </div>
+
+                                        <div>
+                                            <Input
+                                                type="text"
+                                                placeholder="Telefon raqam..."
+                                                label='Telefon raqami'
+                                                id='call'
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)}
+                                            />
+                                            {
+                                                error.phone && <span className="text-danger small">{error.phone[0]}</span>
+                                            }
+                                        </div>
 
                                     </div>
                                     <div className="text-end">

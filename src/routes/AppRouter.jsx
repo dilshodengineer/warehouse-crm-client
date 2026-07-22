@@ -37,6 +37,7 @@ import InventoryReport from "../pages/Reports/InventoryReport";
 import SalesReport from "../pages/Reports/SalesReport";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import AddTransaction from "../pages/Finance/AddTransaction";
+import EditEmployee from "../pages/Employees/EditEmployee";
 
 function AppRouter() {
   return (
@@ -76,6 +77,7 @@ function AppRouter() {
           {/* EMPLOYEES */}
           <Route path="/employees" element={<Employees />} />
           <Route path="/employees/add" element={<AddEmployee />} />
+          <Route path="/employees/:id/edit" element={<EditEmployee />} />
 
           <Route path="/test" element={<h1>TEST ROUTE WORKS</h1>} />
 

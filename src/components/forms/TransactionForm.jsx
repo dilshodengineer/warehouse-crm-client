@@ -56,7 +56,7 @@ const TransactionForm = () => {
     return (
         <>
 
-            {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger" />}
+            {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" yoki "Admin" foydalana oladi.' type="danger" />}
 
             <form onSubmit={handleSubmit} className="row">
                 <div className="col-sm-6">

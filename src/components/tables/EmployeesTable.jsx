@@ -19,7 +19,9 @@ const EmployeesTable = ({ employees }) => {
                     employees.map((employee, index) => (
 
                         <tr key={index}>
+                            
                             <td>{index + 1}</td>
+
                             <td>
                                 <p className='my-0'>
                                     {employee.name}
@@ -28,9 +30,13 @@ const EmployeesTable = ({ employees }) => {
                                     {employee.username}
                                 </p>
                             </td>
+
                             <td>
-                                <b className='text-success'>{employee.role}</b>
+                                <b className='text-success'>
+                                    {employee.role === 'worker'? "Ishchi" : "Admin" }
+                                </b>
                             </td>
+
                             <td>
                                 <div className="d-flex gap-2">
                                     <Link to={`/employees/${employee.id}/edit`} className="btn btn-secondary btn-sm">
@@ -41,6 +47,7 @@ const EmployeesTable = ({ employees }) => {
                                     </button>
                                 </div>
                             </td>
+
                         </tr>
 
                     ))
