@@ -1,7 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { deleteEmployee } from '../../services/EmployeeService';
 
 const EmployeesTable = ({ employees }) => {
+
+    const handleDelete = async (id) => {
+
+        const confirmation = confirm("Haqiatdan ham o'chirishni hohlaysizmi?");
+        if (confirmation) {
+            await deleteEmployee(id);
+        }
+
+    }
+
+
     return (
         <table className='table align-middle'>
             <thead>
@@ -19,7 +31,7 @@ const EmployeesTable = ({ employees }) => {
                     employees.map((employee, index) => (
 
                         <tr key={index}>
-                            
+
                             <td>{index + 1}</td>
 
                             <td>
@@ -33,7 +45,7 @@ const EmployeesTable = ({ employees }) => {
 
                             <td>
                                 <b className='text-success'>
-                                    {employee.role === 'worker'? "Ishchi" : "Admin" }
+                                    {employee.role === 'worker' ? "Ishchi" : "Admin"}
                                 </b>
                             </td>
 
@@ -42,7 +54,10 @@ const EmployeesTable = ({ employees }) => {
                                     <Link to={`/employees/${employee.id}/edit`} className="btn btn-secondary btn-sm">
                                         <i className="bi bi-three-dots"></i> <i className="bi bi-pencil"></i>
                                     </Link>
-                                    <button className="btn btn-dark btn-sm">
+                                    <button 
+                                    onClick={() => handleDelete(employee.id)}
+                                    className="btn btn-dark btn-sm"
+                                    >
                                         <i className="bi bi-trash3"></i>
                                     </button>
                                 </div>

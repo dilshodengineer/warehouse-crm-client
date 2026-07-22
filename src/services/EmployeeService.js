@@ -15,3 +15,5 @@ export const createEmployee = async (data) => {
 };
 
 export const updateEmployee = async (id, data) => await api.put(`/employees/${id}`, data);
+
+export const deleteEmployee =  async (id) => await api.delete(`/employees/${id}`);
