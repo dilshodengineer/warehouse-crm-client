@@ -65,6 +65,11 @@ export const sidebarData = [
           icon: "bi bi-cash-coin",
         },
         {
+          title: "Qarzdorliklar",
+          path: "/debts",
+          icon: "bi bi-exclamation-octagon"
+        },
+        {
           title: "Tushum va chiqim",
           path: "/transactions/form",
           icon: "bi bi-arrow-down-up"

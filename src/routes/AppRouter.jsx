@@ -38,6 +38,8 @@ import SalesReport from "../pages/Reports/SalesReport";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import AddTransaction from "../pages/Finance/AddTransaction";
 import EditEmployee from "../pages/Employees/EditEmployee";
+import Debts from "../pages/Finance/Debts";
+import MakePayment from "../pages/Finance/MakePayment";
 
 function AppRouter() {
   return (
@@ -73,6 +75,8 @@ function AppRouter() {
           {/* FINANCE */}
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/transactions/form" element={<AddTransaction />} />
+          <Route path="/debts" element={<Debts />} />
+          <Route path="/payment/:id" element={<MakePayment />} />
 
           {/* EMPLOYEES */}
           <Route path="/employees" element={<Employees />} />
