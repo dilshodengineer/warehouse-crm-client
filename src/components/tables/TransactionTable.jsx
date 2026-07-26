@@ -1,7 +1,7 @@
-import React from 'react'
-import TransactionStatus from '../ui/TransactionStatus'
-import { formatDate } from '../../utils/formatDate'
-import { formatPrice } from '../../utils/formatPrice'
+import React from 'react';
+import TransactionStatus from '../ui/TransactionStatus';
+import { formatDateTime } from '../../utils/formatDateTime';
+import { formatPrice } from '../../utils/formatPrice';
 
 const TransactionTable = ({ transactions }) => {
     return (
@@ -41,7 +41,7 @@ const TransactionTable = ({ transactions }) => {
                             <td>
                                 <div className="d-flex gap-3">
                                     <span>
-                                        {formatDate(cash.created_at)}
+                                        {formatDateTime(cash.created_at)}
                                     </span>
                                 </div>
                             </td>

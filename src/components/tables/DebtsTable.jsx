@@ -1,5 +1,6 @@
 import React from 'react'
 import { formatPrice } from '../../utils/formatPrice';
+import { formatDate } from '../../utils/formatDateTime';
 import { Link } from 'react-router-dom';
 
 const DebtsTable = ({ debts }) => {
@@ -41,11 +42,13 @@ const DebtsTable = ({ debts }) => {
                                 </span>  - so'm
                             </td>
                             <td>
-                                22.02.2026
+                                {formatDate(debt.created_at)}
                             </td>
                             <td>
-                                <Link to={`/payment/${debt.sale_id}`} className="my-btn-success btn-sm">
-                                    To'lov
+                                <Link
+                                    to={`/payment/${debt.sale_id}`}
+                                    className="my-btn-success d-inline-block text-decoration-none">
+                                    To'lov qilish
                                 </Link>
                             </td>
                         </tr>

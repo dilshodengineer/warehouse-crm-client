@@ -1,7 +1,7 @@
 import {formatStock} from "../../../utils/formatStock";
 import {getUnitForm} from "../../../utils/getUnitForm";
 import {formatPrice} from "../../../utils/formatPrice";
-import {formatDate} from "../../../utils/formatDate";
+import {formatDateTime} from "../../../utils/formatDateTime";
 
 function ReceiptPreview({sale}) {
 
@@ -14,7 +14,7 @@ function ReceiptPreview({sale}) {
         <h6>Haridingiz uchun raxmat</h6>
 
         <p className="receipt-date">
-          {formatDate(sale.created_at)}
+          {formatDateTime(sale.created_at)}
         </p>
 
       </div>

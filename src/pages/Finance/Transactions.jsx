@@ -59,7 +59,7 @@ const Transactions = () => {
 
       {isLoading && <Loader />}
 
-      {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger" />}
+      {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' />}
 
       {error && <Message message={error} type="danger" />}
 

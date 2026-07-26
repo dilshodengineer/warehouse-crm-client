@@ -70,7 +70,7 @@ const AddProduct = () => {
 
             <div className="border-bottom my-2"></div>
 
-            {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' type="danger" />}
+            {forbidden && <Message type="danger" message='Bu sahifadan faqatgina "Ega" foydalana oladi.' />}
 
             <form
                 onSubmit={handleSubmit}
