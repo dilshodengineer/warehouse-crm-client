@@ -1,5 +1,5 @@
 export const formatPrice = (price) => {
-    return price.toLocaleString('fr-FR');
+    return Number(price).toLocaleString('fr-FR');
 };
 
 export const formatPriceInput = (value) => {
