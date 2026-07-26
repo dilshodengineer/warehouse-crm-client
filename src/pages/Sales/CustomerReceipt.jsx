@@ -14,9 +14,7 @@ function CustomerReceipt() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [sale, setSale] = useState({
-    items: [],
-  });
+  const [sale, setSale] = useState({items: [],});
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,6 +39,9 @@ function CustomerReceipt() {
           items: [],
           ...response,
         });
+
+        console.log(response);
+        
       } catch (err) {
         setError(
           err?.response?.data?.message ||

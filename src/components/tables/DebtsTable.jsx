@@ -25,7 +25,7 @@ const DebtsTable = ({ debts }) => {
                     debts.map((debt, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>Salim aka</td>
+                            <td>{debt.sale.customer}</td>
                             <td>
                                 <span className="text-success">
                                     {formatPrice(debt.total_amount)}
@@ -45,11 +45,20 @@ const DebtsTable = ({ debts }) => {
                                 {formatDate(debt.created_at)}
                             </td>
                             <td>
-                                <Link
-                                    to={`/payment/${debt.sale_id}`}
-                                    className="my-btn-success d-inline-block text-decoration-none">
-                                    To'lov qilish
-                                </Link>
+                                <div className="d-flex gap-4 align-items-center">
+                                    <small>
+                                        <Link to={`/sales/history/${debt.sale_id}`} className="text-secondary">
+                                            Batafsil <i className="bi bi-box-arrow-up-right"></i>
+                                        </Link>
+                                    </small>
+
+                                    <Link
+                                        to={`/payment/${debt.sale_id}`}
+                                        state={{ debt: debt }}
+                                        className="my-btn-success d-inline-block text-decoration-none">
+                                        To'lov qilish
+                                    </Link>
+                                </div>
                             </td>
                         </tr>
                     ))

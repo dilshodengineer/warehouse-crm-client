@@ -3,6 +3,7 @@ import PageWindow from '../../components/layout/PageWindow'
 import DebtsTable from '../../components/tables/DebtsTable'
 import { getDebts } from '../../services/DebtService'
 import Loader from '../../components/ui/Loader'
+import Message from '../../components/ui/Message'
 
 const Debts = () => {
 
@@ -22,11 +23,11 @@ const Debts = () => {
             setData(response.data);
 
         } catch (e) {
-            // if(e.response.status === 403){
-            //     setForbidden(true);
-            // } else {
-            //     setError('Xatolik yuz berdi');
-            // }
+            if(e.response.status === 403){
+                setForbidden(true);
+            } else {
+                setError('Xatolik yuz berdi');
+            }
 
             console.log(e.response.status)
 
@@ -42,10 +43,19 @@ const Debts = () => {
 
     return (
         <PageWindow>
-            {loading && <Loader/>}
             <h3>Qarzdorlar</h3>
             <div className="border-bottom mb-2"></div>
-            <DebtsTable debts={data} />
+
+            {loading && <Loader/>}
+            
+            {error && <Message message={error} type="danger"/>}
+
+            {forbidden && <Message message='Bu sahifadan faqat "Ega" foydalana oladi' type="danger"/>}
+            
+            {!loading && !error && !forbidden && data && (
+                <DebtsTable debts={data} />
+            )}
+            
         </PageWindow>
     )
 }

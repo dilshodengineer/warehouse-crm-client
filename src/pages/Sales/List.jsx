@@ -69,9 +69,7 @@ const List = () => {
             console.log(response.data);
 
         } catch (e) {
-            if (e.response.status === 422) {
-                setError(e.response.data.errors);
-            }
+            setError(e.response.data.errors);
         }
 
     }
@@ -83,6 +81,19 @@ const List = () => {
                 <div className="border rounded-3 shadow-sm p-3 bg-white">
                     <h4>Ro'yxat</h4>
                     <div className="border-top my-2"></div>
+                    {
+                        error.stock && (
+                            <ul className="alert alert-danger p-2">
+                                {
+                                    error.stock.map((item, index) => (
+                                        <li key={index}>{item}</li>
+                                    ))
+                                }
+                            </ul>
+                        )
+
+                    }
+
                     {
                         cart.length === 0
                             ?
