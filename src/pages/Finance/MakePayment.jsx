@@ -31,6 +31,9 @@ const MakePayment = () => {
                 navigate('/sales/history');
             }
 
+            console.log(response);
+            
+
         } catch (e) {
 
             if (error.status.code === 403) {
