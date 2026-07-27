@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PageWindow from '../../components/layout/PageWindow';
 import PaymentForm from '../../components/forms/PaymentForm';
 import { formatPrice } from '../../utils/formatPrice';
-import { getSale } from '../../services/SaleService';
 import { useNavigate, useParams } from 'react-router-dom';
 import Message from '../../components/ui/Message';
 import Loader from '../../components/ui/Loader';
+import { getDebt } from '../../services/DebtService';
 
 const MakePayment = () => {
 
@@ -15,25 +15,19 @@ const MakePayment = () => {
     const [loading, setLoading] = useState(false);
     const [forbidden, setForbidden] = useState(false);
     const [error, setError] = useState(null);
-    const [sale, setSale] = useState({ items: [], });
+    const [debt, setDebt] = useState(null);
 
-    const fetchSale = async () => {
+    const fetchDebt = async () => {
         try {
             setLoading(true)
-            const response = await getSale(id);
+            const response = await getDebt(id);
 
-            setSale({
-                items: [],
-                ...response,
-            });
+            setDebt(response.data);
 
             if (response.payment_status === 'paid'){
                 navigate('/sales/history');
             }
-
-            console.log(response);
             
-
         } catch (e) {
 
             if (error.status.code === 403) {
@@ -45,13 +39,13 @@ const MakePayment = () => {
         };
     }
     useEffect(() => {
-        fetchSale();
+        fetchDebt();
     }, []);
 
     return (
         <PageWindow>
             <h3>To'lovni amalga oshirish</h3>
-            <div className="border-bottom"></div>
+            <div className="border-bottom mb-2"></div>
 
             {loading && <Loader />}
 
@@ -59,32 +53,32 @@ const MakePayment = () => {
 
             {forbidden && <Message message='Bu sahifadan faqat "Ega" foydalana oladi' type="danger" />}
 
-            {!loading && !error && !forbidden && sale && (
+            {!loading && !error && !forbidden && debt && (
                 <div className="row mt-3">
                     <div className="col-md-5 mt-3">
-                        <PaymentForm saleId={sale.id}/>
+                        <PaymentForm debtId={debt.id}/>
                     </div>
                     <div className="col-md-7">
-                        <h4>Salim aka</h4>
+                        <h4>{debt.sale.customer}</h4>
                         <div className="border rounded-3 bg-light p-3">
                             <div className="d-flex gap-2">
                                 <p className='fw-semibold m-0'>Qarzdorlik :</p>
                                 <p className='text-danger m-0'>
-                                    {formatPrice(sale.total_amount - sale.paid_amount)}
+                                    {formatPrice(debt.due_amount)}
                                 </p> - so'm
                             </div>
 
                             <div className="d-flex gap-2">
                                 <p className='fw-semibold m-0'>Umumiy hisob :</p>
                                 <p className='text-success m-0'>
-                                    {formatPrice(sale.total_amount)}
+                                    {formatPrice(debt.total_amount)}
                                 </p> - so'm
                             </div>
 
                             <div className="d-flex gap-2">
                                 <p className='fw-semibold m-0'>To'langan :</p>
                                 <p className='text-success m-0'>
-                                    {formatPrice(sale.paid_amount)} - so'm
+                                    {formatPrice(debt.paid_amount)} - so'm
                                 </p>
                             </div>
                         </div>

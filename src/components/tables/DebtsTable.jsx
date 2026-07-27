@@ -53,7 +53,7 @@ const DebtsTable = ({ debts }) => {
                                     </small>
 
                                     <Link
-                                        to={`/payment/${debt.sale_id}`}
+                                        to={`/payment/${debt.id}`}
                                         state={{ debt: debt }}
                                         className="my-btn-success d-inline-block text-decoration-none">
                                         To'lov qilish
@@ -69,4 +69,4 @@ const DebtsTable = ({ debts }) => {
     )
 }
 
-export default DebtsTable
+export default DebtsTable;

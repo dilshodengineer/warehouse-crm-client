@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Input from '../ui/Input'
 import { useLocation } from 'react-router-dom'
-import { formatPriceInput } from '../../utils/formatPrice';
+import { formatPriceInput, parsePrice } from '../../utils/formatPrice';
 import { payForDebt } from '../../services/DebtService';
 
-const PaymentForm = ({ saleId }) => {
+const PaymentForm = ({ debtId }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
@@ -23,23 +23,25 @@ const PaymentForm = ({ saleId }) => {
 
     try {
       setLoading(true);
-      const data = {amount};
-      await payForDebt(saleId, data);
+
+      const payload = {amount: amount};
+      
+      await payForDebt(debtId, payload);
 
     } catch (e) {
 
       if (e.response.status === 422 && e.response.data.errors.amount) {
         setError(e.response.data.errors);
       }else{
-        setMessage("To'lov qilishda xatolik yuz berdi.")
+        setMessage("To'lov qilishda xatolik yuz berdi.");
       }
 
     } finally {
-      setLoading(false)
+      setLoading(false);
     };
+
   }
   
-
 
   return (
     <form onSubmit={handleSubmit} className='row'>
@@ -53,10 +55,6 @@ const PaymentForm = ({ saleId }) => {
           onChange={handleAmountChange}
           className='text-end'
         />
-        <div className="my-2 border-bottom"></div>
-        <button type='submit' className="my-btn-success rounded-2 w-100 py-2">
-          {loading ? "Kuting..." : "Amalga oshirish"}
-        </button>
 
         {error.amount && ( 
           <small className='text-danger mt-2 d-block'>
@@ -69,10 +67,15 @@ const PaymentForm = ({ saleId }) => {
             {message}
           </small>
         )}
+        
+        <div className="my-2 border-bottom"></div>
+        <button type='submit' className="my-btn-success rounded-2 w-100 py-2">
+          {loading ? "Kuting..." : "Amalga oshirish"}
+        </button>
 
       </div>
     </form>
   )
 }
 
-export default PaymentForm
+export default PaymentForm;

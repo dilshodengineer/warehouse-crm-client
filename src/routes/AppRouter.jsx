@@ -58,7 +58,6 @@ function AppRouter() {
 
           {/* DASHBOARD */}
           <Route path="/" element={<Dashboard />} />
-          <Route path="/test" element={<TestPage />} />
 
           {/* SALES */}
           <Route path="/sales/new" element={<NewSale />} />

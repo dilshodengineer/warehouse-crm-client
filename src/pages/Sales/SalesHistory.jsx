@@ -28,6 +28,8 @@ function SalesHistory() {
         setData(response.data);
         setLastPage(response.last_page);
 
+        console.log(response.data);
+
       } catch (err) {
         setErrors(err.response?.data?.errors || "Haatolik yuz berdi.");
 
@@ -97,7 +99,7 @@ function SalesHistory() {
                       {
                         item.payment_status !== 'paid' && (
                           <Link
-                            to={`/payment/${item.id}`}
+                            to={`/payment/${item.debt.id}`}
                             className="my-btn-success d-inline-block text-decoration-none">
                             To'lov qilish
                           </Link>
