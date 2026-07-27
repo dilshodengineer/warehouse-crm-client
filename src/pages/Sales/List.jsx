@@ -6,12 +6,14 @@ import { formatPrice, formatPriceInput } from "../../utils/formatPrice";
 import { useCartStore } from '../../stores/cartStore';
 import { createSale } from '../../services/SaleService';
 import Message from '../../components/ui/Message';
+import LoadingBtn from "../../components/ui/LoadingBtn";
 
 const List = () => {
 
     const navigate = useNavigate();
 
     const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const [disable, setDisable] = useState(false);
     const [customerName, setCustomerName] = useState("");
@@ -36,6 +38,8 @@ const List = () => {
         e.preventDefault();
 
         try {
+            setLoading(true);
+
             const payload = {
                 items: cart.map(item => ({
                     product_id: item.product_id,
@@ -70,6 +74,8 @@ const List = () => {
 
         } catch (e) {
             setError(e.response.data.errors);
+        }finally{
+            setLoading(false);
         }
 
     }
@@ -248,7 +254,7 @@ const List = () => {
 
                                     </div>
                                     <div className="text-end">
-                                        <button className="btn btn-primary">Sotishni Tasdiqlash</button>
+                                        <LoadingBtn content="Sotuvni tasdiqlash" isLoading={loading} />
                                     </div>
                                 </form>
 

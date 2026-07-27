@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import Input from '../ui/Input'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { formatPriceInput, parsePrice } from '../../utils/formatPrice';
 import { payForDebt } from '../../services/DebtService';
 
 const PaymentForm = ({ debtId }) => {
+
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
@@ -27,6 +29,8 @@ const PaymentForm = ({ debtId }) => {
       const payload = {amount: amount};
       
       await payForDebt(debtId, payload);
+
+      navigate('/debts', {replace: true});
 
     } catch (e) {
 
@@ -67,7 +71,7 @@ const PaymentForm = ({ debtId }) => {
             {message}
           </small>
         )}
-        
+
         <div className="my-2 border-bottom"></div>
         <button type='submit' className="my-btn-success rounded-2 w-100 py-2">
           {loading ? "Kuting..." : "Amalga oshirish"}

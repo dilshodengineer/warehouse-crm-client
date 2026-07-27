@@ -21,6 +21,7 @@ const Debts = () => {
             const response = await getDebts(currentPage);
             setLastPage(response.lastPage);
             setData(response.data);
+            
 
         } catch (e) {
             if(e.response.status === 403){

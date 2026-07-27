@@ -24,7 +24,7 @@ const MakePayment = () => {
 
             setDebt(response.data);
 
-            if (response.payment_status === 'paid'){
+            if (response.data.status === 'paid'){
                 navigate('/sales/history');
             }
             

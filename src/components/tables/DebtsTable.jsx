@@ -2,6 +2,7 @@ import React from 'react'
 import { formatPrice } from '../../utils/formatPrice';
 import { formatDate } from '../../utils/formatDateTime';
 import { Link } from 'react-router-dom';
+import PaymentStatus from '../ui/payment-status/PaymentStatus';
 
 const DebtsTable = ({ debts }) => {
 
@@ -11,10 +12,11 @@ const DebtsTable = ({ debts }) => {
                 <tr>
                     <th>#</th>
                     <th>Ismi</th>
+                    <th>Qachon</th>
                     <th>Umumiy hisob</th>
                     <th>To'langan</th>
                     <th>To'lash kerak</th>
-                    <th>Qachon</th>
+                    <th>Status</th>
                     <th>Boshqa</th>
                 </tr>
             </thead>
@@ -26,6 +28,9 @@ const DebtsTable = ({ debts }) => {
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{debt.sale.customer}</td>
+                            <td>
+                                {formatDate(debt.created_at)}
+                            </td>
                             <td>
                                 <span className="text-success">
                                     {formatPrice(debt.total_amount)}
@@ -42,7 +47,7 @@ const DebtsTable = ({ debts }) => {
                                 </span>  - so'm
                             </td>
                             <td>
-                                {formatDate(debt.created_at)}
+                                <PaymentStatus status={debt.status} />
                             </td>
                             <td>
                                 <div className="d-flex gap-4 align-items-center">
@@ -52,12 +57,18 @@ const DebtsTable = ({ debts }) => {
                                         </Link>
                                     </small>
 
-                                    <Link
-                                        to={`/payment/${debt.id}`}
-                                        state={{ debt: debt }}
-                                        className="my-btn-success d-inline-block text-decoration-none">
-                                        To'lov qilish
-                                    </Link>
+                                    {
+                                        debt.status === 'paid' ? ""
+                                            : (
+                                                <Link
+                                                    to={`/payment/${debt.id}`}
+                                                    state={{ debt: debt }}
+                                                    className="my-btn-success d-inline-block text-decoration-none">
+                                                    To'lov qilish
+                                                </Link>
+                                            )
+                                    }
+
                                 </div>
                             </td>
                         </tr>
