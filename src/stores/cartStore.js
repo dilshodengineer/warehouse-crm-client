@@ -26,6 +26,7 @@ export const useCartStore = create(
               {
                 product_id: product.id,
                 product_name: product.name,
+                cost_price: product.cost_price,
                 price: product.price,
                 quantity: 1,
                 unit: product.unit,

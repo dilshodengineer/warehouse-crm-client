@@ -5,6 +5,7 @@ import Loader from '../../components/ui/Loader';
 import LoadingBtn from '../../components/ui/LoadingBtn';
 import { getProduct, updateProduct } from '../../services/ProductService';
 import Message from '../../components/ui/Message';
+import { formatPriceInput } from '../../utils/formatPrice';
 
 const EditProduct = () => {
 
@@ -20,6 +21,7 @@ const EditProduct = () => {
 
     const [product, setProduct] = useState(null);
     const [name, setName] = useState('');
+    const [costPrice, setCostPrice] = useState('');
     const [price, setPrice] = useState('');
     const [unit, setUnit] = useState('kg');
     const [stock, setStock] = useState('');
@@ -39,13 +41,17 @@ const EditProduct = () => {
                 setProduct(data);
 
                 setName(data.name);
-                setPrice(data.price);
+                setCostPrice(formatPriceInput(String(data.cost_price ?? '')));
+                setPrice(formatPriceInput(String(data.price ?? '')));
                 setUnit(data.unit);
                 setStock(data.stock);
                 setDescription(data?.description);
             } catch (e) {
 
-                setPageError(e.response.data.message || "Hatolik yus berdi");
+                setPageError(e.response?.data?.message || "Hatolik yuz berdi");
+                console.log(e);
+
+
 
             } finally {
                 setPageLoading(false)
@@ -54,7 +60,15 @@ const EditProduct = () => {
 
         fetchProduct()
 
-    }, [id])
+    }, [id]);
+
+    const handleCostPriceChange = (e) => {
+        setCostPrice(formatPriceInput(e.target.value));
+    }
+
+    const handlePriceChange = (e) => {
+        setPrice(formatPriceInput(e.target.value));
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -65,6 +79,7 @@ const EditProduct = () => {
 
             const data = {
                 name,
+                cost_price: costPrice,
                 price,
                 stock,
                 unit,
@@ -77,15 +92,18 @@ const EditProduct = () => {
 
         } catch (e) {
 
-            const staus = e.response.status;
+            const status = e.response?.status;
 
-            if (staus === 403) {
+            if (status === 403) {
                 setForbidden(true);
             }
 
-            if (staus === 422) {
-                setPageError(e.response.data.errors);
+            if (status === 422) {
+                setErrors(e.response.data.errors ?? {});
+                return;
             }
+
+            setPageError(e.response?.data?.message ?? "Xatolik yuz berdi.");
 
         } finally {
             setIsLoading(false);
@@ -132,15 +150,45 @@ const EditProduct = () => {
 
                             </div>
 
+                            <div className="col-6">
+                                <Input
+                                    label="Izoh (Ixtiyoriy)"
+                                    id='description'
+                                    type="text"
+                                    placeholder="Izoh"
+                                    className='mt-1 mb-3'
+                                    value={description ?? ''}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="col-sm-6">
+                                <Input
+                                    label="Tan narxi"
+                                    id="cost_price"
+                                    type="text"
+                                    placeholder="Tan narxi"
+                                    className={`mt-1 mb-3 ${errors.cost_price && 'border-danger'}`}
+                                    value={costPrice ?? ''}
+                                    onChange={handleCostPriceChange}
+                                />
+
+                                {errors.cost_price && (
+                                    <div className="text-danger mb-4">
+                                        {errors.cost_price[0]}
+                                    </div>
+                                )}
+                            </div>
+
                             <div className="col-sm-6">
                                 <Input
                                     label="Narxi"
                                     id='price'
-                                    type="number"
-                                    placeholder="Narxi"
+                                    type="text"
+                                    placeholder="Sotuv narxi"
                                     className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
                                     value={price ?? ''}
-                                    onChange={(e) => setPrice(e.target.value)}
+                                    onChange={handlePriceChange}
                                 />
 
                                 {errors.price && (
@@ -225,18 +273,6 @@ const EditProduct = () => {
 
                                 </div>
 
-                            </div>
-
-                            <div className="col-12">
-                                <Input
-                                    label="Izoh (Ixtiyoriy)"
-                                    id='description'
-                                    type="text"
-                                    placeholder="Izoh"
-                                    className='mt-1 mb-3'
-                                    value={description ?? ''}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                />
                             </div>
 
                             <div className="text-end">

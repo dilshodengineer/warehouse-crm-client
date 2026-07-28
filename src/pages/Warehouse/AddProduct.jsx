@@ -15,11 +15,15 @@ const AddProduct = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [name, setName] = useState('');
+    const [costPrice, setCostPrice] = useState('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [unit, setUnit] = useState('kg');
     const [description, setDescription] = useState('');
 
+    const handleCostPriceChange = (e) => {
+        setCostPrice(formatPriceInput(e.target.value));
+    }
     const handlePriceChange = (e) => {
         setPrice(formatPriceInput(e.target.value));
     }
@@ -33,6 +37,7 @@ const AddProduct = () => {
 
             const data = {
                 name,
+                cost_price: costPrice,
                 price,
                 stock,
                 unit,
@@ -46,17 +51,21 @@ const AddProduct = () => {
 
         } catch (e) {
 
-            const status = e.response.status
+            const status = e.response?.status
 
-            if(status === 403){
+            if (status === 403) {
                 setForbidden(true);
             }
 
             if (status === 422) {
-                setErrors(e.response.data.errors || "Xatolik yuz berdi.");
+                setErrors(e.response.data.errors ?? {});
+                return;
             }
 
-            // console.log(e.response?.data || e.message);
+            console.log(status);
+            
+            console.error(e.response?.data ?? e.message);
+
         } finally {
             setIsLoading(false);
         }
@@ -88,25 +97,55 @@ const AddProduct = () => {
                     />
 
                     {errors.name && (
-                        <div className="text-danger mb-4">
+                        <div className="text-danger mb-2">
                             {errors.name[0]}
+                        </div>
+                    )}
+                </div>
+
+                <div className="col-6">
+                    <Input
+                        label="Izoh (Ixtiyoriy)"
+                        id='description'
+                        type="text"
+                        placeholder="Izoh"
+                        className='mt-1 mb-3'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </div>
+
+                <div className="col-sm-6">
+                    <Input
+                        label="Tan narxi (so'm)"
+                        id="cost_price"
+                        type="text"
+                        placeholder="Tan narxi"
+                        className={`mt-1 mb-3 ${errors.cost_price && 'border-danger'}`}
+                        value={costPrice}
+                        onChange={handleCostPriceChange}
+                    />
+
+                    {errors.cost_price && (
+                        <div className="text-danger mb-2">
+                            {errors.cost_price[0]}
                         </div>
                     )}
                 </div>
 
                 <div className="col-sm-6">
                     <Input
-                        label="Narxi"
+                        label="Sotuv Narxi (so'm)"
                         id='price'
                         type="text"
-                        placeholder="Narxi"
+                        placeholder="Sotuv narxi"
                         className={`mt-1 mb-3 ${errors.price && 'border-danger'}`}
                         value={price}
                         onChange={handlePriceChange}
                     />
 
                     {errors.price && (
-                        <div className="text-danger mb-4">
+                        <div className="text-danger mb-2">
                             {errors.price[0]}
                         </div>
                     )}
@@ -124,7 +163,7 @@ const AddProduct = () => {
                     />
 
                     {errors.stock && (
-                        <div className="text-danger mb-4">
+                        <div className="text-danger mb-2">
                             {errors.stock[0]}
                         </div>
                     )}
@@ -187,20 +226,8 @@ const AddProduct = () => {
 
                 </div>
 
-                <div className="col-12">
-                    <Input
-                        label="Izoh (Ixtiyoriy)"
-                        id='description'
-                        type="text"
-                        placeholder="Izoh"
-                        className='mt-1 mb-3'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </div>
-
                 <div className="text-end">
-                    <LoadingBtn isLoading={isLoading} content="Qo'shish"/>
+                    <LoadingBtn isLoading={isLoading} content="Qo'shish" />
                 </div>
 
             </form>

@@ -45,6 +45,7 @@ const List = () => {
                     product_id: item.product_id,
                     product_name: item.product_name,
                     unit: item.unit,
+                    cost_price: Number(item.cost_price),
                     price: Number(item.price),
                     quantity: Number(item.quantity),
                 })),
