@@ -1,54 +1,19 @@
-import React from 'react'
+import React from 'react';
+import PageWindow from "../../components/layout/PageWindow";
+import StatisticsCard from '../../components/ui/StatisticsCard';
 
 const Dashboard = () => {
-  return (
-    <div>
-      <table className="table table-bordered">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Ismi</th>
-                <th>Status</th>
-                <th>Boshqarish</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>Vali Jumayev</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>John Doe</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Ali Hayitov</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Kimdir</td>
-                <td><div className="border border-success bg-success bg-opacity-25 text-success">Ishchi</div></td>
-                <td>
-                    <button className="btn btn-warning text-white">Boshqarish</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-  )
-}
+    return (
+        <PageWindow>
+            <h3>Boshqaruv Paneli</h3>
+            <div className="border-bottom mb-2"></div>
+            <div className="container-fluid">
+                <div className="row">
+                    <StatisticsCard count={"10+"} text={"Xodimlar"}/>
+                </div>
+            </div>
+        </PageWindow>
+    )
+};
 
-export default Dashboard
+export default Dashboard;

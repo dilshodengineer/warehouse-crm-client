@@ -63,7 +63,9 @@ const Transactions = () => {
 
       {error && <Message message={error} type="danger" />}
 
-      {!isLoading && !error && !forbidden && (
+      {!isLoading && data.length === 0 && (<Message message="Hozircha kirim va chiqim yo'q." />)}
+
+      {!isLoading && !error && !forbidden && data.length > 0 && (
         <>
           <TransactionTable transactions={data} />
 
