@@ -12,6 +12,7 @@ const ProductsTable = ({ data, handleClick }) => {
                     <th>#</th>
                     <th>Nomi</th>
                     <th>Miqdori va turi</th>
+                    <th>Tan narxi</th>
                     <th>Narxi</th>
                     <th>Boshqarish</th>
                 </tr>
@@ -33,6 +34,9 @@ const ProductsTable = ({ data, handleClick }) => {
                                         {unitBadge.content}
                                     </small>
                                 </div>
+                            </td>
+                            <td>
+                                <b>{formatPrice(item.cost_price)}</b> so'm
                             </td>
 
                             <td>

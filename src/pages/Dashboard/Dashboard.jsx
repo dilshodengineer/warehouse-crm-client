@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PageWindow from "../../components/layout/PageWindow";
 import StatisticsCard from '../../components/ui/StatisticsCard';
-import { getCards } from "../../services/DashboardService";
+import { getDashboard } from "../../services/DashboardService";
 import Cards from './Cards';
-import { preconnect } from 'react-dom';
+import Message from '../../components/ui/Message';
+import Loader from '../../components/ui/Loader';
+import SalesChart from './SalesChart';
 
 const Dashboard = () => {
 
@@ -11,36 +13,38 @@ const Dashboard = () => {
     const [error, setError] = useState(null);
     const [dashboard, setDashboard] = useState({
         cards: [],
-        salesChart: [],
-        recentSales: [],
-        topProducts: [],
-        lowStock: [],
+        sales_chart: [],
+        recent_sales: [],
+        top_products: [],
+        low_stock: [],
     });
 
-    const fetchCards = async () => {
-
+    const fetchDashboard = async () => {
         try {
             setLoading(true);
-            const response = await getCards();
-            setDashboard(prev => ({
-                ...prev,
-                cards: response.cards
-            }));
-            
-        }catch(e){
 
-            setError(e.response.status || 'Xatolik yuz berdi.');
+            const response = await getDashboard();
 
-        }finally{
+            setDashboard(response);
+
+            console.log(
+                response
+            );
+
+
+        } catch (e) {
+            setError(
+                e.response?.data?.message ??
+                e.response?.status ??
+                'Xatolik yuz berdi.'
+            );
+        } finally {
             setLoading(false);
         }
-        
-        
-        
-    }
+    };
 
     useEffect(() => {
-        fetchCards();
+        fetchDashboard();
     }, [])
 
     return (
@@ -48,9 +52,19 @@ const Dashboard = () => {
 
             <h3>Boshqaruv Paneli</h3>
             <div className="border-bottom mb-2"></div>
-            <div className="container-fluid">
-                <Cards cards={dashboard.cards} />
-            </div>
+
+            {loading && <Loader />}
+
+            {error && <Message type="danger" message={error} />}
+
+            {!loading && !error && dashboard && (
+                <div className="container-fluid">
+                    <Cards cards={dashboard.cards} />
+
+                    <SalesChart data={dashboard.sales_chart} />
+                </div>
+            )}
+
         </PageWindow>
     )
 };

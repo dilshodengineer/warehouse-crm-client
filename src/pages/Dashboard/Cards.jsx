@@ -1,5 +1,5 @@
-import React from 'react'
-import StatisticsCard from '../../components/ui/StatisticsCard'
+import React from 'react';
+import StatisticsCard from '../../components/ui/StatisticsCard';
 
 const Cards = ({ cards }) => {
     
@@ -8,11 +8,11 @@ const Cards = ({ cards }) => {
     <div className='row mt-2'>
         {
             cards.map((card) => (
-                <StatisticsCard key={card.title} title={card.title} unit={card.unit} count={card.count} />
+                <StatisticsCard key={card.id} title={card.title} unit={card.unit} count={card.count} />
             ))
         }
     </div>
   )
 }
 
-export default Cards
+export default Cards;
