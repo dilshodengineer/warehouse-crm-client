@@ -6,6 +6,8 @@ import Cards from './Cards';
 import Message from '../../components/ui/Message';
 import Loader from '../../components/ui/Loader';
 import SalesChart from './SalesChart';
+import RecentSales from './RecentSales';
+import TopProducts from './TopProducts';
 
 const Dashboard = () => {
 
@@ -58,10 +60,14 @@ const Dashboard = () => {
             {error && <Message type="danger" message={error} />}
 
             {!loading && !error && dashboard && (
-                <div className="container-fluid">
+                <div className="container-fluid pb-3">
                     <Cards cards={dashboard.cards} />
 
-                    <SalesChart data={dashboard.sales_chart} />
+                    <SalesChart chartData={dashboard.sales_chart} />
+
+                    <RecentSales recentSales={dashboard.recent_sales} />
+
+                    <TopProducts products={dashboard.top_products}/>
                 </div>
             )}
 

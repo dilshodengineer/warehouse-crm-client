@@ -23,7 +23,7 @@ function SidebarItem({ item }) {
     return (
       <Link
         to={item.path}
-        className={`link ${active ? "active" : ""}`}
+        className={`link text-decoration-none ${active ? "active" : ""}`}
       >
         {item.icon && (
           <i className={item.icon} style={{ marginRight: "8px" }}></i>
