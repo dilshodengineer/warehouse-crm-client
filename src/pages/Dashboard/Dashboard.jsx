@@ -8,6 +8,7 @@ import Loader from '../../components/ui/Loader';
 import SalesChart from './SalesChart';
 import RecentSales from './RecentSales';
 import TopProducts from './TopProducts';
+import LowStock from './LowStock';
 
 const Dashboard = () => {
 
@@ -68,6 +69,8 @@ const Dashboard = () => {
                     <RecentSales recentSales={dashboard.recent_sales} />
 
                     <TopProducts products={dashboard.top_products}/>
+
+                    <LowStock products={dashboard.low_stock}/>
                 </div>
             )}
 

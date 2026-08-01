@@ -61,7 +61,7 @@ function SalesHistory() {
           <SearchBar />
         </div>
         <div className="border-bottom my-2"></div>
-        <table className="table table-bordered">
+        <table className="table align-middle table-striped">
           <thead>
             <tr>
               <th>#</th>

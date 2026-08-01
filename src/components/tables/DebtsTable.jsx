@@ -7,7 +7,7 @@ import PaymentStatus from '../ui/payment-status/PaymentStatus';
 const DebtsTable = ({ debts }) => {
 
     return (
-        <table className="table">
+        <table className="table align-middle table-striped">
             <thead>
                 <tr>
                     <th>#</th>
