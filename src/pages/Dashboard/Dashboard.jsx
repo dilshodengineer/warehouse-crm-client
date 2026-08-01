@@ -9,6 +9,7 @@ import SalesChart from './SalesChart';
 import RecentSales from './RecentSales';
 import TopProducts from './TopProducts';
 import LowStock from './LowStock';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
 
@@ -54,7 +55,17 @@ const Dashboard = () => {
         <PageWindow>
 
             <h3>Boshqaruv Paneli</h3>
-            <div className="border-bottom mb-2"></div>
+            <div className="border-bottom border-top mb-2">
+                <div className="py-2 btn-group">
+                    <a href="#total" className='btn btn-outline-primary'>Umumiy korsatgichlar</a>
+                    <a href="#monthly" className='btn btn-outline-primary'>30 kunlik savdo</a>
+                    <a href="#recently" className='btn btn-outline-primary'>Oxirgi 10 ta savdo</a>
+                    <a href="#top" className='btn btn-outline-primary'>Top sotilgan mahsulotlar</a>
+                    <a href="#low-stock" className='btn btn-outline-primary'>Kam Qolgan Mahsulotlar</a>
+                    <Link to="/reports" className='btn btn-outline-primary'>Ma'lum vaqt xisoboti <i className="bi bi-calendar-month"></i> <i className="bi bi-search"></i></Link>
+                </div>
+            </div>
+
 
             {loading && <Loader />}
 

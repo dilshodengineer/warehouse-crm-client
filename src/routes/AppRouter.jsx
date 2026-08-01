@@ -40,6 +40,7 @@ import AddTransaction from "../pages/Finance/AddTransaction";
 import EditEmployee from "../pages/Employees/EditEmployee";
 import Debts from "../pages/Finance/Debts";
 import MakePayment from "../pages/Finance/MakePayment";
+import Reports from "../pages/Dashboard/Reports";
 
 function AppRouter() {
   return (
@@ -58,6 +59,7 @@ function AppRouter() {
 
           {/* DASHBOARD */}
           <Route path="/" element={<Dashboard />} />
+          <Route path="/reports" element={<Reports/>}/>
 
           {/* SALES */}
           <Route path="/sales/new" element={<NewSale />} />

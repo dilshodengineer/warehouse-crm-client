@@ -3,7 +3,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 
 const SalesChart = ({ chartData }) => {
     return (
-        <div className='row mt-4'>
+        <div className='row mt-4' id='mothly'>
             <div className="col-lg-12">
 
                 <div className="card shadow-sm">

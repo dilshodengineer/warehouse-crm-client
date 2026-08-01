@@ -5,6 +5,8 @@
     list-style: none;
     text-decoration: none;
     font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+    transition: 1s all linear;
 }
 
 body {

@@ -5,7 +5,7 @@ import { formatStock } from '../../utils/formatStock';
 
 const TopProducts = ({ products }) => {
     return (
-        <div className="card shadow-sm mt-5">
+        <div className="card shadow-sm mt-5" id='top'>
             <div className="card-header bg-white">
                 <h5 className="mb-0 fw-semibold">Top sotilgan maxsulotlar</h5>
             </div>

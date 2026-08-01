@@ -5,7 +5,7 @@ const Cards = ({ cards }) => {
 
 
   return (
-    <div className='row mt-2 border-bottom pb-4'>
+    <div className='row mt-2 border-bottom pb-4' id='total'>
       <h5 className='mb-0 mt-3 border-bottom pb-2 fw-semibold'>Umumiy ko'rsatgichlar</h5>
 
       {

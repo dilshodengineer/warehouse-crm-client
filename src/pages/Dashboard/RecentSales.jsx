@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const RecentSales = ({ recentSales }) => {
     return (
-        <div className='card mt-5 shadow-sm'>
+        <div className='card mt-5 shadow-sm' id='recently'>
             <div className="card-header bg-white">
                 <h5 className='mb-0 fw-semibold'>Oxirgi 10 ta savdo</h5>
             </div>
